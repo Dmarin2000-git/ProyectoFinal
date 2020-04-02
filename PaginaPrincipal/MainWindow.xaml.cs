@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,18 @@ namespace PaginaPrincipal
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Load_table_Click(object sender, RoutedEventArgs e)
+        {
+           
+
+         
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
