@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,19 +22,38 @@ namespace PaginaPrincipal
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
-            InitializeComponent();
+            
         }
 
-        private void Load_table_Click(object sender, RoutedEventArgs e)
+        public void showDDBB() {
+            try {
+                SqlConnection conn = new SqlConnection("Server=(local);Database=WA317;Uid=miau;Password=miau;");
+                conn.Open();
+                MessageBox.Show("connected");
+
+                string sql = "SELECT * FROM Almacenes";
+
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = sql;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("emp");
+                sda.Fill(dt);
+
+                dataGrid1.ItemsSource = dt.DefaultView;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void Button1_Click(object sender, RoutedEventArgs e)
         {
-           
-
-         
+            showDDBB();
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DataGrid1_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
 
         }
