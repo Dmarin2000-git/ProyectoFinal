@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Configuration;
 
 namespace PaginaPrincipal
 {
@@ -25,12 +26,33 @@ namespace PaginaPrincipal
         
         public MainWindow()
         {
-            
+            InitializeComponent();
+            bindatagrid();
+
         }
 
-        public void showDDBB() {
+        private void bindatagrid()
+        {
+            //throw new NotImplementedException();
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString = ConfigurationManager.ConnectionStrings["connectionddbb"].ConnectionString;
+            conn.Open();
+            MessageBox.Show("connected");
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "Select * from [Almacenes]";
+            cmd.Connection = conn;
+
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable("Almacenes");
+            sda.Fill(dt);
+
+            dataGrid1.ItemsSource = dt.DefaultView;
+        }
+
+        /*public void showDDBB() {
             try {
-                SqlConnection conn = new SqlConnection("Server=(local);Database=WA317;Uid=miau;Password=miau;");
+                SqlConnection conn = new SqlConnection("Server=(local);Database=WA317; Integrated Security = true;");
                 conn.Open();
                 MessageBox.Show("connected");
 
@@ -46,16 +68,8 @@ namespace PaginaPrincipal
                 dataGrid1.ItemsSource = dt.DefaultView;
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
+        }*/
 
-        private void Button1_Click(object sender, RoutedEventArgs e)
-        {
-            showDDBB();
-        }
-
-        private void DataGrid1_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        {
-
-        }
+        
     }
 }
