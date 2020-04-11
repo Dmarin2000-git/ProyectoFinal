@@ -27,48 +27,55 @@ namespace PaginaPrincipal
         public MainWindow()
         {
             InitializeComponent();
-            bindatagrid();
+
+            abrirtablas(); //llamaos este metodo para la abrir en la pagina principal todas las tablas en sus respectivos datagrids
 
         }
 
-        private void bindatagrid()
+        private void bindatagrid(String buscar, int indicador)
         {
             //throw new NotImplementedException();
+            String search = buscar; //indica la tabla que quieres visualizar
+            int indicador_grid = indicador; //indicador para diferenciar entre datagrids
+
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = ConfigurationManager.ConnectionStrings["connectionddbb"].ConnectionString;
-            conn.Open();
-            MessageBox.Show("connected");
+            conn.Open(); //codigo para abrir la conexión con la base de datos
+            //hace referencia al App.conig donde tenemos las credenciales
+            //MessageBox.Show("connected");
 
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Select * from [Almacenes]";
-            cmd.Connection = conn;
+            cmd.CommandText = "Select * from "+search;
+            cmd.Connection = conn; //creamos comando para para realizar el select
 
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable("Almacenes");
-            sda.Fill(dt);
+            DataTable dt = new DataTable(search);
+            sda.Fill(dt); //selecciona la tabla demandada
 
-            dataGrid1.ItemsSource = dt.DefaultView;
+            switch (indicador_grid) { //utilizamos identificados, cada case es un datagrid 
+                case 1:
+                    dataGrid1.ItemsSource = dt.DefaultView;
+                    break;
+                case 2:
+                    dataGrid2.ItemsSource = dt.DefaultView;
+                    break;
+                case 3:
+                    dataGrid3.ItemsSource = dt.DefaultView;
+                    break;
+                case 4:
+                    dataGrid1.ItemsSource = dt.DefaultView;
+                    break;
+            }
+            //dataGrid2.ItemsSource = dt.DefaultView;
         }
 
-        /*public void showDDBB() {
-            try {
-                SqlConnection conn = new SqlConnection("Server=(local);Database=WA317; Integrated Security = true;");
-                conn.Open();
-                MessageBox.Show("connected");
-
-                string sql = "SELECT * FROM Almacenes";
-
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = sql;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("emp");
-                sda.Fill(dt);
-
-                dataGrid1.ItemsSource = dt.DefaultView;
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }*/
+        public void abrirtablas() {
+            //abrimos las tablas llamando al metodo bindatagrid
+            bindatagrid("Article", 1);
+            bindatagrid("Almacenes", 2);
+            bindatagrid("Empleado", 3);
+            bindatagrid("Proveedor", 4);
+        }
 
         
     }
