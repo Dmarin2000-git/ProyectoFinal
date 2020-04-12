@@ -45,25 +45,41 @@ namespace PaginaPrincipal
             //MessageBox.Show("connected");
 
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Select * from "+search;
-            cmd.Connection = conn; //creamos comando para para realizar el select
-
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable(search);
-            sda.Fill(dt); //selecciona la tabla demandada
+            
+            //sda.Fill(dt); 
 
             switch (indicador_grid) { //utilizamos identificados, cada case es un datagrid 
                 case 1:
+                    
+                    cmd.CommandText = "Select * from [Article]";
+                    cmd.Connection = conn; //creamos comando para para realizar el select
+                    DataTable dt = new DataTable("Article");
+                    sda.Fill(dt); //selecciona la tabla demandada
                     dataGrid1.ItemsSource = dt.DefaultView;
                     break;
+
                 case 2:
-                    dataGrid2.ItemsSource = dt.DefaultView;
+                    cmd.CommandText = "Select * from [Almacenes]";
+                    cmd.Connection = conn; //creamos comando para para realizar el select
+                    DataTable dt1 = new DataTable("Almacenes");
+                    sda.Fill(dt1); //selecciona la tabla demandada
+                    dataGrid2.ItemsSource = dt1.DefaultView;
                     break;
+
                 case 3:
-                    dataGrid3.ItemsSource = dt.DefaultView;
+                    cmd.CommandText = "Select * from Persona p inner join Empleado e on p.id = e.id ";
+                    cmd.Connection = conn; //creamos comando para para realizar el select
+                    DataTable dt2 = new DataTable("Persona");
+                    sda.Fill(dt2); //selecciona la tabla demandada
+                    dataGrid3.ItemsSource = dt2.DefaultView;
                     break;
                 case 4:
-                    dataGrid1.ItemsSource = dt.DefaultView;
+                    cmd.CommandText = "Select * from Persona p inner join Representante e on p.id = e.id ";
+                    cmd.Connection = conn; //creamos comando para para realizar el select
+                    DataTable dt3 = new DataTable("Persona");
+                    sda.Fill(dt3); //selecciona la tabla demandada
+                    dataGrid4.ItemsSource = dt3.DefaultView;
                     break;
             }
             //dataGrid2.ItemsSource = dt.DefaultView;

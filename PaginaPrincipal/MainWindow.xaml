@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:PaginaPrincipal"
         mc:Ignorable="d"
         Icon="Icono.ico"
-        Title="WA317" Height="471" Width="959"
+        Title="WA317" Height="470" Width="902"
         >
     <DockPanel>
         <Grid>
-            <TabControl>
+            <TabControl Margin="10">
                 <TabItem Header="CONSULTA" Height="40" Width="100">
                     <Grid Margin="10">
                         <TabControl TabStripPlacement="Left" Margin="0, 0, 0, 10">
                             <TabItem Name="Artículos" Header="Articles" Height="30" Width="100">
                                 <TextBlock TextWrapping="WrapWithOverflow"><InlineUIContainer>
                                         <Grid Height="336" Width="659">
-                                            <DataGrid x:Name="dataGrid1" Margin="0,0,132,0"/>
+                                            <DataGrid x:Name="dataGrid1" Margin="0,0,132,0" IsReadOnly="True"/>
                                                 
                                         </Grid>
                                     </InlineUIContainer></TextBlock>
@@ -27,7 +27,7 @@
                                 <TabItem.Content>
                                     <TextBlock TextWrapping="WrapWithOverflow">
                                         <Grid Height="336" Width="659">
-                                            <DataGrid x:Name="dataGrid2" Margin="0,0,132,0"/>
+                                            <DataGrid x:Name="dataGrid2" Margin="0,0,132,0" IsReadOnly="True"/>
                                                 
                                         </Grid>
                                     </TextBlock>
@@ -37,9 +37,9 @@
                                 <TabItem.Content>
                                     <TextBlock TextWrapping="WrapWithOverflow">
                                         <Grid Height="336" Width="659">
-                                            <DataGrid x:Name="dataGrid3" Margin="0,0,132,0"/>
+                                            <DataGrid x:Name="dataGrid3" Margin="0,0,132,0" IsReadOnly="True"/>
                                                 
-                                        </Grid>        
+                                        </Grid>
                                     </TextBlock>
                                 </TabItem.Content>
                             </TabItem>
@@ -47,7 +47,7 @@
                                 <TabItem.Content>
                                     <TextBlock TextWrapping="WrapWithOverflow">
                                         <Grid Height="336" Width="659">
-                                            <DataGrid x:Name="dataGrid4" Margin="0,0,132,0"/>
+                                            <DataGrid x:Name="dataGrid4" Margin="0,0,132,0" IsReadOnly="True"/>
                                                 
                                         </Grid>
                                     </TextBlock>
@@ -62,7 +62,7 @@
                 </TabItem>
 
                 <TabItem Header="BBDD" Height="40" Width="100">
-                    <TabControl>
+                    <TabControl Margin="10">
                         <TabItem Header="ALMACENES" Height="20">
                             <Grid Margin="15">
                                 <DataGrid HorizontalAlignment="Left" Height="263" Margin="10,10,0,0" VerticalAlignment="Top" Width="432"/>
