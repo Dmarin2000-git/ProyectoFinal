@@ -1,0 +1,2 @@
+ARTICLES 20/04/20
+'A003',1,'Arandelas',1,0.2;

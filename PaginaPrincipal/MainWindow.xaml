@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PaginaPrincipal"
         mc:Ignorable="d"
-        Icon="Icono.ico"
+        Icon="interface_eye_view_watch_eyeball_pupil_circle_icon_132981.ico"
         Title="WA317" Height="470" Width="902"
         >
     <DockPanel>
@@ -16,22 +16,27 @@
                         <TabControl TabStripPlacement="Left" Margin="0, 0, 0, 10">
                             <TabItem Name="Artículos" Header="Articles" Height="30" Width="100">
                                 <TextBlock TextWrapping="WrapWithOverflow"><InlineUIContainer>
-                                        <Grid Height="336" Width="659">
-                                            <DataGrid x:Name="dataGrid1" Margin="0,0,132,0" IsReadOnly="True"/>
+                                        <Grid Height="336" Width="511">
+                                            <DataGrid x:Name="dataGrid1" IsReadOnly="True"/>
                                                 
                                         </Grid>
-                                    </InlineUIContainer></TextBlock>
+                                    
+                                    </InlineUIContainer><InlineUIContainer>
+                                       <Grid Height="335" RenderTransformOrigin="0.5,0.5" Width="228">
+                                           
+                                       </Grid>
+                                    </InlineUIContainer><InlineUIContainer>
+                                       
+                                    </InlineUIContainer><InlineUIContainer/></TextBlock>
                             </TabItem>
 
                             <TabItem Name="warehouse" Header="Almacenes" Height="30" Width="100">
-                                <TabItem.Content>
-                                    <TextBlock TextWrapping="WrapWithOverflow">
-                                        <Grid Height="336" Width="659">
-                                            <DataGrid x:Name="dataGrid2" Margin="0,0,132,0" IsReadOnly="True"/>
+                                <TextBlock TextWrapping="WrapWithOverflow" Margin="0,0,216,0"><InlineUIContainer>
+                                            <Grid Height="336" Width="511">
+                                                <DataGrid x:Name="dataGrid2" Margin="0,0,10,0" IsReadOnly="True"/>
                                                 
-                                        </Grid>
-                                    </TextBlock>
-                                </TabItem.Content>
+                                            </Grid>
+                                        </InlineUIContainer></TextBlock>
                             </TabItem>
                             <TabItem Name="employees" Header="Empleados" Height="30" Width="100">
                                 <TabItem.Content>
@@ -53,6 +58,7 @@
                                     </TextBlock>
                                 </TabItem.Content>
                             </TabItem>
+                            <Grid Height="100" Width="100"/>
                         </TabControl>
                     </Grid>
                 </TabItem>
@@ -61,64 +67,17 @@
 
                 </TabItem>
 
-                <TabItem Header="BBDD" Height="40" Width="100">
-                    <TabControl Margin="10">
-                        <TabItem Header="ALMACENES" Height="20">
-                            <Grid Margin="15">
-                                <DataGrid HorizontalAlignment="Left" Height="263" Margin="10,10,0,0" VerticalAlignment="Top" Width="432"/>
-                                <Button Content="Añadir Fila" HorizontalAlignment="Left" Margin="528,44,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Modificar Fila" HorizontalAlignment="Left" Margin="528,110,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Suprimir Fila" HorizontalAlignment="Left" Margin="528,179,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
+                <TabItem Header="AM" Height="40" Width="100">
+                    <Grid Margin="20">
+                        
+                        <ListBox HorizontalAlignment="Left" Height="73" Margin="0,172,0,0" VerticalAlignment="Top" Width="242">
+                            <ListBoxItem x:Name="UpdateArticles" >ACTUALIZAR ARTICULOS TABLA ARTCILE</ListBoxItem>
+                            <ListBoxItem x:Name="UpdateAlmacenes" >ACTUALIZAR STOCK TABLA ALMACEN</ListBoxItem>
+                            <ListBoxItem x:Name="UpdateMarket" >ACTUALIZAR ARTICULOS TABLA MERCADO</ListBoxItem>
+                        </ListBox>
+                        <Button Content="CARGAR" HorizontalAlignment="Left" Margin="72,129,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
 
-                            </Grid>
-                        </TabItem>
-
-                        <TabItem Header="ARTICULOS" Height="20">
-                            <Grid Margin="15">
-                                <DataGrid HorizontalAlignment="Left" Height="263" Margin="10,10,0,0" VerticalAlignment="Top" Width="432"/>
-                                <Button Content="Añadir Fila" HorizontalAlignment="Left" Margin="528,44,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Modificar Fila" HorizontalAlignment="Left" Margin="528,110,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Suprimir Fila" HorizontalAlignment="Left" Margin="528,179,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="EMPELADOS" Height="20">
-                            <Grid Margin="15">
-                                <DataGrid HorizontalAlignment="Left" Height="263" Margin="10,10,0,0" VerticalAlignment="Top" Width="432"/>
-                                <Button Content="Añadir Fila" HorizontalAlignment="Left" Margin="528,44,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Modificar Fila" HorizontalAlignment="Left" Margin="528,110,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Suprimir Fila" HorizontalAlignment="Left" Margin="528,179,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="PROVEEDORES" Height="20">
-                            <Grid Margin="15">
-                                <DataGrid HorizontalAlignment="Left" Height="263" Margin="10,10,0,0" VerticalAlignment="Top" Width="432"/>
-                                <Button Content="Añadir Fila" HorizontalAlignment="Left" Margin="528,44,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Modificar Fila" HorizontalAlignment="Left" Margin="528,110,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Suprimir Fila" HorizontalAlignment="Left" Margin="528,179,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="REPRESENTANTES" Height="20">
-                            <Grid Margin="15">
-                                <DataGrid HorizontalAlignment="Left" Height="263" Margin="10,10,0,0" VerticalAlignment="Top" Width="432"/>
-                                <Button Content="Añadir Fila" HorizontalAlignment="Left" Margin="528,44,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Modificar Fila" HorizontalAlignment="Left" Margin="528,110,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Suprimir Fila" HorizontalAlignment="Left" Margin="528,179,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="MERCADO" Height="20">
-                            <Grid Margin="15">
-                                <DataGrid HorizontalAlignment="Left" Height="263" Margin="10,10,0,0" VerticalAlignment="Top" Width="432"/>
-                                <Button Content="Añadir Fila" HorizontalAlignment="Left" Margin="528,44,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Modificar Fila" HorizontalAlignment="Left" Margin="528,110,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-                                <Button Content="Suprimir Fila" HorizontalAlignment="Left" Margin="528,179,0,0" VerticalAlignment="Top" Width="128" Height="34"/>
-
-                            </Grid>
-                        </TabItem>
-                    </TabControl>
+                    </Grid>
                 </TabItem>
             </TabControl>
         </Grid>

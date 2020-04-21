@@ -46,12 +46,13 @@ namespace PaginaPrincipal
 
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            
+
             //sda.Fill(dt); 
 
-            switch (indicador_grid) { //utilizamos identificados, cada case es un datagrid 
+            switch (indicador_grid)
+            { //utilizamos identificados, cada case es un datagrid 
                 case 1:
-                    
+
                     cmd.CommandText = "Select * from [Article]";
                     cmd.Connection = conn; //creamos comando para para realizar el select
                     DataTable dt = new DataTable("Article");
@@ -85,7 +86,8 @@ namespace PaginaPrincipal
             //dataGrid2.ItemsSource = dt.DefaultView;
         }
 
-        public void abrirtablas() {
+        public void abrirtablas()
+        {
             //abrimos las tablas llamando al metodo bindatagrid
             bindatagrid("Article", 1);
             bindatagrid("Almacenes", 2);
@@ -93,6 +95,22 @@ namespace PaginaPrincipal
             bindatagrid("Proveedor", 4);
         }
 
-        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString = ConfigurationManager.ConnectionStrings["connectionddbb"].ConnectionString;
+            conn.Open();
+            SqlCommand sql_cmnd1 = new SqlCommand("app_LoadArticles", conn);
+            sql_cmnd1.CommandType = CommandType.StoredProcedure;
+            sql_cmnd1.ExecuteNonQuery();
+            SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
+            sql_cmnd2.CommandType = CommandType.StoredProcedure;
+            sql_cmnd2.ExecuteNonQuery();
+            conn.Close();
+
+            abrirtablas();
+
+            MessageBox.Show("ACTUALIZADO");
+        }
     }
 }
