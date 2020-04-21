@@ -24,7 +24,7 @@ namespace PaginaPrincipal
     public partial class MainWindow : Window
     {
         
-        public MainWindow()
+        public MainWindow() /*MAIN*/
         {
             InitializeComponent();
 
@@ -32,14 +32,19 @@ namespace PaginaPrincipal
 
         }
 
-        private void bindatagrid(String buscar, int indicador)
+        public SqlConnection EstablecerConexion() { /*ABRIR LA CONEXION CON LA BASE DE DATOS*/
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString = ConfigurationManager.ConnectionStrings["connectionddbb"].ConnectionString;
+            return conn;
+        }
+
+        private void bindatagrid(String buscar, int indicador) /*HACER UN SELECT DE LAS TABLAS DE LA VENTANA PRINCIPAL*/
         {
             //throw new NotImplementedException();
             String search = buscar; //indica la tabla que quieres visualizar
             int indicador_grid = indicador; //indicador para diferenciar entre datagrids
 
-            SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = ConfigurationManager.ConnectionStrings["connectionddbb"].ConnectionString;
+            SqlConnection conn = EstablecerConexion();
             conn.Open(); //codigo para abrir la conexión con la base de datos
             //hace referencia al App.conig donde tenemos las credenciales
             //MessageBox.Show("connected");
@@ -86,7 +91,7 @@ namespace PaginaPrincipal
             //dataGrid2.ItemsSource = dt.DefaultView;
         }
 
-        public void abrirtablas()
+        public void abrirtablas() /*METOD AL QUE LLAMA EL MAIN PARA QUE ABRA TODAS LAS TABLAS*/
         {
             //abrimos las tablas llamando al metodo bindatagrid
             bindatagrid("Article", 1);
@@ -95,22 +100,47 @@ namespace PaginaPrincipal
             bindatagrid("Proveedor", 4);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e) /*LANZADOR DEL AM*/
         {
-            SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = ConfigurationManager.ConnectionStrings["connectionddbb"].ConnectionString;
-            conn.Open();
-            SqlCommand sql_cmnd1 = new SqlCommand("app_LoadArticles", conn);
-            sql_cmnd1.CommandType = CommandType.StoredProcedure;
-            sql_cmnd1.ExecuteNonQuery();
-            SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
+            SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
+            conn.Open(); 
+            SqlCommand sql_cmnd1 = new SqlCommand("app_LoadArticles", conn); //creamos un comando para ejecutar procedures
+            sql_cmnd1.CommandType = CommandType.StoredProcedure; 
+            sql_cmnd1.ExecuteNonQuery(); //ejecutamos el procedure que carga los articulos 
+            SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn); 
             sql_cmnd2.CommandType = CommandType.StoredProcedure;
-            sql_cmnd2.ExecuteNonQuery();
+            sql_cmnd2.ExecuteNonQuery();//ejecutamos el procedure que actualiza el stock de los almacenes
             conn.Close();
 
-            abrirtablas();
+            abrirtablas(); //reabrimos la tablas para que se vean actualizadas
 
             MessageBox.Show("ACTUALIZADO");
+        }
+
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e) /*ELIMINAR FILA DE LA TABLA ARTICLE*/
+        {
+            SqlConnection conn = EstablecerConexion(); //establecemos conexion
+
+            try
+            {
+                int delete_data = int.Parse(DeleteID.Text); //convertimos el textbox en int
+                if (delete_data == 0)
+                {
+                    MessageBox.Show("EL VALOR NO PUEDE SER 0"); //capturamos excepcion manualmente
+                }
+                else {
+                    SqlCommand command = new SqlCommand("DELETE Article where id =" + delete_data, conn);//creamos comando
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();//ejecutamos comando
+                    MessageBox.Show("FILA ELIMINADA CON EL VALOR: " + delete_data);
+                    bindatagrid("Article", 1);//actualizamos la tabla
+                    conn.Close();
+                    DeleteID.Clear();//limpimaos el textbox
+                }
+                
+            }
+            catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
+            //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
         }
     }
 }
