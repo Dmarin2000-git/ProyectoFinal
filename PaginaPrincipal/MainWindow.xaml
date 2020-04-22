@@ -24,6 +24,7 @@
                                            <Label Margin="10,10,10,290" HorizontalAlignment="Center">ELIMINAR FILA</Label>
                                            <TextBox Margin="30,50,30,260" Name="DeleteID"></TextBox>
                                            <Button Margin="30,80,30,230" Name="ButtonDelete" Click="ButtonDelete_Click">ELIMINAR</Button>
+                                           <Button Height="25" Margin="30,115,30,195" Name="ButtonTruncate" Click="ButtonTruncate_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
                                            <Button Height="25" Margin="80,250,10,60" Name="openAdd">AÑADIR</Button>
                                            <Button Height="25" Margin="80,290,10,20" Name="openFilter">FILTRO</Button>
                                        </Grid>
@@ -33,12 +34,19 @@
                             </TabItem>
 
                             <TabItem Name="warehouse" Header="Almacenes" Height="30" Width="100">
-                                <TextBlock TextWrapping="WrapWithOverflow" Margin="0,0,216,0"><InlineUIContainer>
-                                            <Grid Height="336" Width="511">
-                                                <DataGrid x:Name="dataGrid2" Margin="0,0,10,0" IsReadOnly="True"/>
+
+                                <TextBlock TextWrapping="WrapWithOverflow" Margin="0,0,216,0">
+                                            <Grid Height="336" Width="733">
+                                                <DataGrid x:Name="dataGrid2" Margin="0,0,219,0" IsReadOnly="True"/>
+                                                <Button Content="Button" HorizontalAlignment="Left" Margin="590,147,0,0" VerticalAlignment="Top" Width="74"></Button>
                                                 
                                             </Grid>
-                                        </InlineUIContainer></TextBlock>
+
+
+
+
+                                </TextBlock>
+
                             </TabItem>
                             <TabItem Name="employees" Header="Empleados" Height="30" Width="100">
                                 <TabItem.Content>
@@ -62,7 +70,10 @@
                             </TabItem>
                             <Grid Height="100" Width="100"/>
                         </TabControl>
-                        <Button Content="AM" HorizontalAlignment="Left" Margin="0,230,0,0" VerticalAlignment="Top" Width="88" Height="25" Click="Button_Click_1"/>
+                        <Button Content="AM" HorizontalAlignment="Left" Margin="0,180,0,0" VerticalAlignment="Top" Width="88" Height="25" Click="Button_Click_1"/>
+                        <Button Content="ALMACEN" HorizontalAlignment="Left" Margin="0,220,0,0" VerticalAlignment="Top" Width="88" Height="25" Click="Button_Click_almacenes"/>
+                        <Button Content="EMPLEADOS" HorizontalAlignment="Left" Margin="0,260,0,0" VerticalAlignment="Top" Width="88" Height="25" Click="Button_Click_empleados"/>
+                        <Button Content="PROVEEDOR" HorizontalAlignment="Left" Margin="0,300,0,0" VerticalAlignment="Top" Width="88" Height="25" Click="Button_Click_proveedores"/>
                     </Grid>
                 </TabItem>
 
@@ -70,9 +81,7 @@
 
                 </TabItem>
 
-                <TabItem Header="AM" Height="40" Width="100">
-
-                </TabItem>
+                
             </TabControl>
         </Grid>
 

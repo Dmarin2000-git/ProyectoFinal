@@ -23,7 +23,7 @@ namespace PaginaPrincipal
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         public MainWindow() /*MAIN*/
         {
             InitializeComponent();
@@ -32,7 +32,8 @@ namespace PaginaPrincipal
 
         }
 
-        public SqlConnection EstablecerConexion() { /*ABRIR LA CONEXION CON LA BASE DE DATOS*/
+        public SqlConnection EstablecerConexion()
+        { /*ABRIR LA CONEXION CON LA BASE DE DATOS*/
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = ConfigurationManager.ConnectionStrings["connectionddbb"].ConnectionString;
             return conn;
@@ -45,9 +46,10 @@ namespace PaginaPrincipal
             int indicador_grid = indicador; //indicador para diferenciar entre datagrids
 
             SqlConnection conn = EstablecerConexion();
+
             conn.Open(); //codigo para abrir la conexión con la base de datos
-            //hace referencia al App.conig donde tenemos las credenciales
-            //MessageBox.Show("connected");
+                         //hace referencia al App.conig donde tenemos las credenciales
+                         //MessageBox.Show("connected"); 
 
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -102,24 +104,38 @@ namespace PaginaPrincipal
 
         private void Button_Click_1(object sender, RoutedEventArgs e) /*LANZADOR DEL AM*/
         {
-            SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
-            conn.Open(); 
-            SqlCommand sql_cmnd1 = new SqlCommand("app_LoadArticles", conn); //creamos un comando para ejecutar procedures
-            sql_cmnd1.CommandType = CommandType.StoredProcedure; 
-            sql_cmnd1.ExecuteNonQuery(); //ejecutamos el procedure que carga los articulos 
-            SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn); 
-            sql_cmnd2.CommandType = CommandType.StoredProcedure;
-            sql_cmnd2.ExecuteNonQuery();//ejecutamos el procedure que actualiza el stock de los almacenes
-            conn.Close();
+            MessageBoxResult result = MessageBox.Show("¿Estás seguro de que quieres lanzar una actualización masiva?", "AM", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
 
-            abrirtablas(); //reabrimos la tablas para que se vean actualizadas
+                    SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
+                    conn.Open();
+                    SqlCommand sql_cmnd1 = new SqlCommand("app_LoadArticles", conn); //creamos un comando para ejecutar procedures
+                    sql_cmnd1.CommandType = CommandType.StoredProcedure;
+                    sql_cmnd1.ExecuteNonQuery(); //ejecutamos el procedure que carga los articulos 
+                    SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
+                    sql_cmnd2.CommandType = CommandType.StoredProcedure;
+                    sql_cmnd2.ExecuteNonQuery();//ejecutamos el procedure que actualiza el stock de los almacenes
+                    conn.Close();
 
-            MessageBox.Show("ACTUALIZADO");
+                    abrirtablas(); //reabrimos la tablas para que se vean actualizadas
+
+                    MessageBox.Show("ACTUALIZADO", "AM");
+
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Operación cancelada", "AM");
+                    break;
+
+            }
+
         }
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e) /*ELIMINAR FILA DE LA TABLA ARTICLE*/
         {
             SqlConnection conn = EstablecerConexion(); //establecemos conexion
+            
 
             try
             {
@@ -128,7 +144,8 @@ namespace PaginaPrincipal
                 {
                     MessageBox.Show("EL VALOR NO PUEDE SER 0"); //capturamos excepcion manualmente
                 }
-                else {
+                else
+                {
                     SqlCommand command = new SqlCommand("DELETE Article where id =" + delete_data, conn);//creamos comando
                     command.Connection.Open();
                     command.ExecuteNonQuery();//ejecutamos comando
@@ -137,10 +154,31 @@ namespace PaginaPrincipal
                     conn.Close();
                     DeleteID.Clear();//limpimaos el textbox
                 }
-                
+
             }
             catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
             //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
+        }
+
+        private void ButtonTruncate_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Se vaciará la tabla por completo. ¿Estás seguro de que quieres continuar?", "TR", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    SqlConnection conn = EstablecerConexion();
+                    SqlCommand command = new SqlCommand("TRUNCATE TABLE Article",conn);//creamos comando
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();//ejecutamos comando
+                    MessageBox.Show("TABLA VACIADA", "TR");
+                    bindatagrid("Article", 1);
+                    conn.Close();
+                    break;
+
+                case MessageBoxResult.No:
+                    MessageBox.Show("OPERACIÓN CANCELADA");
+                    break;
+            }
         }
     }
 }
