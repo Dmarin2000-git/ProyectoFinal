@@ -102,7 +102,7 @@ namespace PaginaPrincipal
             bindatagrid("Proveedor", 4);
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e) /*LANZADOR DEL AM*/
+        private void Button_Click_AM(object sender, RoutedEventArgs e) /*LANZADOR DEL AM*/
         {
             MessageBoxResult result = MessageBox.Show("¿Estás seguro de que quieres lanzar una actualización masiva?", "AM", MessageBoxButton.YesNo);
             switch (result)
@@ -126,6 +126,32 @@ namespace PaginaPrincipal
                     break;
                 case MessageBoxResult.No:
                     MessageBox.Show("Operación cancelada", "AM");
+                    break;
+
+            }
+
+        }
+
+        private void Button_Click_BackUp(object sender, RoutedEventArgs e) /*LANZADOR DEL BACKUPS*/
+        {
+            MessageBoxResult result = MessageBox.Show("Va a realizar una copia de seguridad de todas las tablas.¿Desea continuar?", "BK", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+
+                    SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
+                    conn.Open();
+                    SqlCommand sql_cmnd1 = new SqlCommand("app_backUpSystem", conn); //creamos un comando para ejecutar procedures
+                    sql_cmnd1.CommandType = CommandType.StoredProcedure;
+                    conn.Close();
+
+                    //abrirtablas(); //no hace falta ya que no mostramos las tablas del backup
+
+                    MessageBox.Show("COPIA DE SEGURIDAD REALIZADA", "BK");
+
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Operación cancelada", "BK");
                     break;
 
             }
@@ -179,6 +205,11 @@ namespace PaginaPrincipal
                     MessageBox.Show("OPERACIÓN CANCELADA");
                     break;
             }
+        }
+
+        private void Button_Click_Load(object sender, RoutedEventArgs e)
+        {
+            abrirtablas(); //abrir las tablas de nuevo
         }
     }
 }
