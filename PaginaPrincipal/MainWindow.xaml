@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PaginaPrincipal"
         mc:Ignorable="d"
-        Icon="interface_eye_view_watch_eyeball_pupil_circle_icon_132981.ico"
+        Icon="D:\Documentos\Informatica\Projecte\ProyectoFinal\PaginaPrincipal\WA317.ico"
         Title="WA317" Height="470" Width="902"
         >
 
@@ -33,7 +33,7 @@
                         <TabControl TabStripPlacement="Left" Margin="0, 0, 0, 10">
                             <TabItem Name="Artículos" Header="Articles" Height="30" Width="100">
                                 <TextBlock TextWrapping="WrapWithOverflow" Height="335" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="740"><InlineUIContainer>
-                                            <DataGrid x:Name="dataGrid1" IsReadOnly="True" Height="336" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="511"/>
+                                            <DataGrid x:Name="dataGrid1" IsReadOnly="True" Height="326" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="511"/>
                             
                                     </InlineUIContainer><InlineUIContainer>
                                        <Grid Height="335" RenderTransformOrigin="0.5,0.5" Width="228">
@@ -52,10 +52,10 @@
                                 <TextBlock TextWrapping="WrapWithOverflow" Margin="0,0,-10,0">
                                             <Grid Height="336" Width="733">
                                                 <DataGrid x:Name="dataGrid2" Margin="0,0,219,0" IsReadOnly="True"/>
-                                                <Label Margin="530,10,10,290" HorizontalAlignment="Center">ELIMINAR FILA</Label>
-                                                <TextBox Margin="550,50,30,260" Name="DeleteID1"></TextBox>
-                                                <Button Margin="550,80,30,230" Name="ButtonDelete1" Click="ButtonDelete_Click">ELIMINAR</Button>
-                                                <Button Height="25" Margin="570,290,10,22" Name="ButtonTruncate1" Click="ButtonTruncate_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
+                                                <Label Margin="550,35,30,265" HorizontalContentAlignment="Center" Width="153">ELIMINAR FILA POR ID:</Label>
+                                                <TextBox Margin="550,76,30,234" Name="DeleteID1"></TextBox>
+                                                <Button Margin="550,107,30,203" Name="ButtonDelete1" Click="ButtonDelete_Click">ELIMINAR</Button>
+                                                <Button Height="25" Margin="570,289,10,22" Name="ButtonTruncate1" Click="ButtonTruncate_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
                                             </Grid>
 
                                 </TextBlock>
@@ -86,7 +86,47 @@
                             </TabItem>
                             <TabItem Name="filter" Header="Filtro" Height="30" Width="100">
                                 <TextBlock><InlineUIContainer/><InlineUIContainer>
-                                        <Grid Height="336" Width="743" Margin="10"/>
+                                        <Grid Height="336" Width="743" Margin="10">
+                                            <ComboBox Margin="0,29,552,284" Name="ComboboxFiltro">
+                                                <ComboBoxItem x:Name="boxArticle" Content="ARTICLE" Selected="BoxArticle_Selected"/>
+                                                <ComboBoxItem x:Name="boxAlmacenes" Content="ALMACENES"/>
+                                                <ComboBoxItem x:Name="boxEmpleados" Content="EMPLEADOS"/>
+                                                <ComboBoxItem x:Name="boxProveedores" Content="PROVEEDORES"/>
+                                            </ComboBox>
+                                            <Label Margin="-2,0,541,307"/>
+                                            <DataGrid Margin="10,66,311,20" Name="DataGridFilter"/>
+                                            <Grid Margin="447,1,23,36" Background="AliceBlue" ShowGridLines="True" >
+                                                <TabControl>
+                                                    <TabItem Header="ARTICLE" Name="articlefilter">
+                                                        <Grid>
+                                                            <TextBox Margin="76,30,10,215" Name="Artfilter"></TextBox>
+                                                            <TextBlock Margin="54,36,200,217" RenderTransformOrigin="2.522,0.944" HorizontalAlignment="Center">Id:</TextBlock>
+                                                            <TextBox Margin="76,80,10,165" Name="IdAlmfilter"></TextBox>
+                                                            <TextBlock Margin="15,88,201,165" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Art_Code:</TextBlock>
+                                                            <TextBox Margin="76,130,10,115" Name="Idprovfilter"></TextBox>
+                                                            <TextBlock Margin="20,135,208,118" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Id_Alm:</TextBlock>
+                                                            <TextBox Margin="76,180,10,65" Name="costfilter"></TextBox>
+                                                            <TextBlock Margin="20,185,211,68" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Precio:</TextBlock>
+                                                            <Button Margin="151,240,10,10">APLICAR</Button>
+                                                             
+                                                        </Grid>
+                                                        
+                                                    </TabItem>
+                                                    <TabItem Header="ALMACEN" Name="warehousefilter">
+                                                        
+                                                    </TabItem>
+                                                    <TabItem Header="EMPLEADOS" Name="emplyeefilter">
+                                                        
+                                                    </TabItem>
+                                                    <TabItem Header="PROV." Name="providerfilter">
+                                                        
+                                                    </TabItem>
+                                                    <TextBlock Height="100" TextWrapping="Wrap" Text="TextBlock" Width="100"/>
+                                                </TabControl>
+                                            </Grid>
+                                        </Grid>
+                                    </InlineUIContainer><InlineUIContainer/><InlineUIContainer>
+                                        
                                     </InlineUIContainer><InlineUIContainer/></TextBlock>
                             </TabItem>
                         </TabControl>

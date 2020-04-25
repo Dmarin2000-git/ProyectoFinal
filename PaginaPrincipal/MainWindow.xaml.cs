@@ -108,21 +108,24 @@ namespace PaginaPrincipal
             switch (result)
             {
                 case MessageBoxResult.Yes:
+                    try {
 
-                    SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
-                    conn.Open();
-                    SqlCommand sql_cmnd1 = new SqlCommand("app_LoadArticles", conn); //creamos un comando para ejecutar procedures
-                    sql_cmnd1.CommandType = CommandType.StoredProcedure;
-                    sql_cmnd1.ExecuteNonQuery(); //ejecutamos el procedure que carga los articulos 
-                    SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
-                    sql_cmnd2.CommandType = CommandType.StoredProcedure;
-                    sql_cmnd2.ExecuteNonQuery();//ejecutamos el procedure que actualiza el stock de los almacenes
-                    conn.Close();
+                        SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
+                        conn.Open();
+                        SqlCommand sql_cmnd1 = new SqlCommand("app_LoadArticles", conn); //creamos un comando para ejecutar procedures
+                        sql_cmnd1.CommandType = CommandType.StoredProcedure;
+                        sql_cmnd1.ExecuteNonQuery(); //ejecutamos el procedure que carga los articulos 
+                        SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
+                        sql_cmnd2.CommandType = CommandType.StoredProcedure;
+                        sql_cmnd2.ExecuteNonQuery();//ejecutamos el procedure que actualiza el stock de los almacenes
+                        conn.Close();
 
-                    abrirtablas(); //reabrimos la tablas para que se vean actualizadas
+                        abrirtablas(); //reabrimos la tablas para que se vean actualizadas
 
-                    MessageBox.Show("ACTUALIZADO", "AM");
+                        MessageBox.Show("ACTUALIZADO", "AM");
 
+                    } catch (Exception ex) { MessageBox.Show("No hay información el fichero"); }
+                    
                     break;
                 case MessageBoxResult.No:
                     MessageBox.Show("Operación cancelada", "AM");
@@ -210,6 +213,21 @@ namespace PaginaPrincipal
         private void Button_Click_Load(object sender, RoutedEventArgs e)
         {
             abrirtablas(); //abrir las tablas de nuevo
+        }
+
+        
+        private void BoxArticle_Selected(object sender, RoutedEventArgs e)
+        {
+            SqlConnection conn = EstablecerConexion();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            cmd.CommandText = "Select * from [Article]";
+            cmd.Connection = conn; //creamos comando para para realizar el select
+            DataTable dt = new DataTable("Article");
+            sda.Fill(dt); //selecciona la tabla demandada
+            DataGridFilter.ItemsSource = dt.DefaultView;
+           
         }
     }
 }
