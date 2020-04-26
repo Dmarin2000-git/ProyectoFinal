@@ -14,6 +14,7 @@
             <MenuItem Header="Archivo">
                 <MenuItem Header="Actualización masiva" Click="Button_Click_AM"></MenuItem>
                 <MenuItem Header="Copia de Seguridad" Click="Button_Click_BackUp"></MenuItem>
+                <MenuItem Header="Restaurar tablas del Backup" Click="Button_Click_Restore"></MenuItem>
                 <MenuItem Header="Tablas por defecto" Click="Button_Click_Load"></MenuItem>
             </MenuItem>
             <MenuItem Header="Configuración">
@@ -99,15 +100,15 @@
                                                 <TabControl>
                                                     <TabItem Header="ARTICLE" Name="articlefilter">
                                                         <Grid>
-                                                            <TextBox Margin="76,30,10,215" Name="Artfilter"></TextBox>
-                                                            <TextBlock Margin="54,36,200,217" RenderTransformOrigin="2.522,0.944" HorizontalAlignment="Center">Id:</TextBlock>
-                                                            <TextBox Margin="76,80,10,165" Name="IdAlmfilter"></TextBox>
-                                                            <TextBlock Margin="15,88,201,165" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Art_Code:</TextBlock>
-                                                            <TextBox Margin="76,130,10,115" Name="Idprovfilter"></TextBox>
-                                                            <TextBlock Margin="20,135,208,118" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Id_Alm:</TextBlock>
+                                                            <TextBox Margin="76,30,10,215" Name="codefilter"></TextBox>
+                                                            <TextBlock Margin="31,186,194,67" RenderTransformOrigin="2.522,0.944" HorizontalAlignment="Center" Width="42">Precio:</TextBlock>
+                                                            <TextBox Margin="76,80,10,165" Name="almfilter"></TextBox>
+                                                            <TextBlock Margin="14,34,201,219" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Art_Code:</TextBlock>
+                                                            <TextBox Margin="76,130,10,115" Name="provfilter"></TextBox>
+                                                            <TextBlock Margin="28,80,200,173" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Id_Alm:</TextBlock>
                                                             <TextBox Margin="76,180,10,65" Name="costfilter"></TextBox>
-                                                            <TextBlock Margin="20,185,211,68" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Precio:</TextBlock>
-                                                            <Button Margin="151,240,10,10">APLICAR</Button>
+                                                            <TextBlock Margin="24,133,193,120" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center" Width="50">Id_Prov:</TextBlock>
+                                                            <Button Margin="151,240,10,10" Click="Button_Click">APLICAR</Button>
                                                              
                                                         </Grid>
                                                         

@@ -189,7 +189,7 @@ namespace PaginaPrincipal
             //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
         }
 
-        private void ButtonTruncate_Click(object sender, RoutedEventArgs e)
+        private void ButtonTruncate_Click(object sender, RoutedEventArgs e) /*VACIAR TABLA ENTERA*/
         {
             MessageBoxResult result = MessageBox.Show("Se vaciará la tabla por completo. ¿Estás seguro de que quieres continuar?", "TR", MessageBoxButton.YesNo);
             switch (result)
@@ -210,13 +210,13 @@ namespace PaginaPrincipal
             }
         }
 
-        private void Button_Click_Load(object sender, RoutedEventArgs e)
+        private void Button_Click_Load(object sender, RoutedEventArgs e) /*BOTON DE SEGURIDAD SI DESAPARECEN TABLAS VOLVER A CARGARLAS*/
         {
             abrirtablas(); //abrir las tablas de nuevo
         }
 
         
-        private void BoxArticle_Selected(object sender, RoutedEventArgs e)
+        private void BoxArticle_Selected(object sender, RoutedEventArgs e) /*ABRIR TABLA EN EL FILTRO DE ARTICLE*/
         {
             SqlConnection conn = EstablecerConexion();
             conn.Open();
@@ -229,5 +229,128 @@ namespace PaginaPrincipal
             DataGridFilter.ItemsSource = dt.DefaultView;
            
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e) /*FILTRO ARTICLE*/
+        {
+            //definimos la condición del comando
+            String condicion = "";
+            String and = " and ";
+            int avisador = 0;
+
+            int idprov= 0;
+            String idprString = null;
+
+            String art_code = null;
+
+            int id_alm = 0;
+            String id_almSTring = null;
+
+            double cost;
+            String costString;
+
+            if (string.IsNullOrWhiteSpace(codefilter.Text))
+            {
+                //MessageBox.Show("Art_code esta vacio");
+                avisador++;
+            }
+            else 
+            {
+                art_code = codefilter.Text;
+                condicion = "SELECT * FROM Article WHERE art_code ="+"'"+art_code+"'";
+            }
+
+            if (string.IsNullOrWhiteSpace(almfilter.Text))
+            {
+                //MessageBox.Show("Alm esta vacio");
+                avisador++;
+            }
+            else {
+                id_alm = int.Parse(almfilter.Text);
+                id_almSTring = id_alm.ToString();
+
+                if (string.IsNullOrWhiteSpace(codefilter.Text))
+                {
+                    condicion = "SELECT * FROM Article WHERE id_alm ="+id_alm;
+                }
+                else { condicion += and + "id_alm = " + id_alm; }
+            }
+
+            if (string.IsNullOrWhiteSpace(provfilter.Text))
+            {
+                //MessageBox.Show("Prov esta vacio");
+                avisador++;
+            }
+            else {
+                idprov = int.Parse(provfilter.Text);
+                idprString = idprov.ToString();
+
+                if (string.IsNullOrWhiteSpace(almfilter.Text) || string.IsNullOrWhiteSpace(codefilter.Text))
+                {
+                    condicion = "SELECT * FROM Article WHERE id_prov =" + idprov;
+                }
+                else { condicion += and + "id_prov = " + idprov; }
+
+            }
+
+            if (string.IsNullOrWhiteSpace(costfilter.Text))
+            {
+                //MessageBox.Show("Cost esta vacio");
+                avisador++;
+            }
+            else 
+            {
+                cost = double.Parse(costfilter.Text);
+                costString = cost.ToString();
+
+                if (string.IsNullOrWhiteSpace(almfilter.Text) || string.IsNullOrWhiteSpace(codefilter.Text) || (string.IsNullOrWhiteSpace(almfilter.Text)))
+                {
+                    condicion = "SELECT * FROM Article WHERE precio =" + cost;
+                }
+                else { condicion = and + "precio = " + cost; }
+
+                
+            }
+
+            //MessageBox.Show(condicion);
+            SqlConnection conn = EstablecerConexion();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+
+            if (avisador == 4)
+            {
+                /*cmd.CommandText = "Select * from Article";
+                cmd.Connection = conn; //creamos comando para para realizar el select
+                DataTable dt = new DataTable("Article");
+                sda.Fill(dt); //selecciona la tabla demandada
+                DataGridFilter.ItemsSource = dt.DefaultView;*/
+            }
+            else {
+                MessageBox.Show(condicion);
+                cmd.CommandText =  condicion;
+                cmd.Connection = conn; //creamos comando para para realizar el select
+                DataTable dt = new DataTable("Article");
+                sda.Fill(dt); //selecciona la tabla demandada
+                DataGridFilter.ItemsSource = dt.DefaultView;
+            }
+
+
+            
+        }
+
+
+        private void Button_Click_Restore(object sender, RoutedEventArgs e) /*RESTAURAR LAS TABLAS DEL ULTIMO BACKUP*/
+        {
+            MessageBox.Show("Se restablecerán las tablas de la última copia de seguridad. ¿Desea continuar?");
+            SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
+            conn.Open();
+            SqlCommand sql_cmnd1 = new SqlCommand("app_restoreTables", conn); //creamos un comando para ejecutar procedures
+            sql_cmnd1.CommandType = CommandType.StoredProcedure;
+            MessageBox.Show("Tablas restablecidas");
+            conn.Close();
+        }
+
+        
     }
 }
