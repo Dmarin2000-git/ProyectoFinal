@@ -102,9 +102,9 @@ namespace PaginaPrincipal
             bindatagrid("Proveedor", 4);
         }
 
-        private void Button_Click_AM(object sender, RoutedEventArgs e) /*LANZADOR DEL AM*/
+        private void Button_Click_LoadArtcile (object sender, RoutedEventArgs e) /*FORZAR CARGA DE DATOS*/
         {
-            MessageBoxResult result = MessageBox.Show("¿Estás seguro de que quieres lanzar una actualización masiva?", "AM", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("¿Estás seguro de que quieres forzar una carga de datos?", "FC", MessageBoxButton.YesNo);
             switch (result)
             {
                 case MessageBoxResult.Yes:
@@ -122,17 +122,30 @@ namespace PaginaPrincipal
 
                         abrirtablas(); //reabrimos la tablas para que se vean actualizadas
 
-                        MessageBox.Show("ACTUALIZADO", "AM");
+                        MessageBox.Show("ACTUALIZADO", "FC");
 
                     } catch (Exception ex) { MessageBox.Show("No hay información el fichero"); }
                     
                     break;
                 case MessageBoxResult.No:
-                    MessageBox.Show("Operación cancelada", "AM");
+                    MessageBox.Show("Operación cancelada", "FC");
                     break;
 
             }
 
+        }
+
+        private void backup() {
+
+            SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
+            conn.Open();
+            SqlCommand sql_cmnd1 = new SqlCommand("app_backUpSystem", conn); //creamos un comando para ejecutar procedures
+            sql_cmnd1.CommandType = CommandType.StoredProcedure;
+            conn.Close();
+
+            //abrirtablas(); //no hace falta ya que no mostramos las tablas del backup
+
+            MessageBox.Show("COPIA DE SEGURIDAD REALIZADA", "BK");
         }
 
         private void Button_Click_BackUp(object sender, RoutedEventArgs e) /*LANZADOR DEL BACKUPS*/
@@ -142,15 +155,7 @@ namespace PaginaPrincipal
             {
                 case MessageBoxResult.Yes:
 
-                    SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
-                    conn.Open();
-                    SqlCommand sql_cmnd1 = new SqlCommand("app_backUpSystem", conn); //creamos un comando para ejecutar procedures
-                    sql_cmnd1.CommandType = CommandType.StoredProcedure;
-                    conn.Close();
-
-                    //abrirtablas(); //no hace falta ya que no mostramos las tablas del backup
-
-                    MessageBox.Show("COPIA DE SEGURIDAD REALIZADA", "BK");
+                    backup();
 
                     break;
                 case MessageBoxResult.No:
@@ -307,7 +312,6 @@ namespace PaginaPrincipal
                     condicion = "SELECT * FROM Article WHERE precio =" + cost;
                 }
                 else { condicion = and + "precio = " + cost; }
-
                 
             }
 
@@ -335,10 +339,7 @@ namespace PaginaPrincipal
                 DataGridFilter.ItemsSource = dt.DefaultView;
             }
 
-
-            
         }
-
 
         private void Button_Click_Restore(object sender, RoutedEventArgs e) /*RESTAURAR LAS TABLAS DEL ULTIMO BACKUP*/
         {
@@ -351,6 +352,77 @@ namespace PaginaPrincipal
             conn.Close();
         }
 
-        
+        private void Button_Click_AM(object sender, RoutedEventArgs e) /*DESCARGA Y CARGA DE DATOS EN LA BASE DE DATOS*/
+        {
+            MessageBoxResult result = MessageBox.Show("Antes de cada actualización masiva se realiza una copia de seguridad. ¿Desea continuar?", "AM", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    try
+                    {
+                        backup(); //antes de nada realizamos una copia de seguridad
+
+                        SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
+                        conn.Open();
+                        SqlCommand sql_cmnd = new SqlCommand("app_OutStock", conn); //primero hacemos las salidas
+                        sql_cmnd.CommandType = CommandType.StoredProcedure;
+                        sql_cmnd.ExecuteNonQuery();
+                        SqlCommand sql_cmnd1 = new SqlCommand("app_LoadArticles", conn); //por segundo entramos todos los nuevos
+                        sql_cmnd1.CommandType = CommandType.StoredProcedure;
+                        sql_cmnd1.ExecuteNonQuery(); //ejecutamos el procedure que carga los articulos 
+                        SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
+                        sql_cmnd2.CommandType = CommandType.StoredProcedure;
+                        sql_cmnd2.ExecuteNonQuery();//ejecutamos el procedure que actualiza el stock de los almacenes
+                        conn.Close();
+
+                        abrirtablas(); //reabrimos la tablas para que se vean actualizadas
+
+                        MessageBox.Show("ACTUALIZADO", "AM");
+
+                    }
+                    catch (Exception ex) { MessageBox.Show("No hay información el fichero"); }
+
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Operación cancelada", "AM");
+                    break;
+
+            }
+        }
+
+        private void Button_Click_OutArtcile(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Se forzaran la salida de lso articulos ¿Desea continuar?", "EXIT", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    try
+                    {
+                        
+                        SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
+                        conn.Open();
+                        SqlCommand sql_cmnd = new SqlCommand("app_OutStock", conn); //hacemos las salidas
+                        sql_cmnd.CommandType = CommandType.StoredProcedure;
+                        sql_cmnd.ExecuteNonQuery();
+                        SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
+                        sql_cmnd2.CommandType = CommandType.StoredProcedure;
+                        sql_cmnd2.ExecuteNonQuery();//ejecutamos el procedure que actualiza el stock de los almacenes
+
+                        conn.Close();
+
+                        abrirtablas(); //reabrimos la tablas para que se vean actualizadas
+
+                        MessageBox.Show("ACTUALIZADO", "EXIT");
+
+                    }
+                    catch (Exception ex) { MessageBox.Show("No hay información el fichero"); }
+
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Operación cancelada", "EXIT");
+                    break;
+
+            }
+        }
     }
 }

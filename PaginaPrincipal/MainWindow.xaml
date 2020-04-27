@@ -13,6 +13,8 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Archivo">
                 <MenuItem Header="Actualización masiva" Click="Button_Click_AM"></MenuItem>
+                <MenuItem Header="Forzar carga de datos" Click="Button_Click_LoadArtcile"></MenuItem>
+                <MenuItem Header="Forzar salida de datos" Click="Button_Click_OutArtcile"></MenuItem>
                 <MenuItem Header="Copia de Seguridad" Click="Button_Click_BackUp"></MenuItem>
                 <MenuItem Header="Restaurar tablas del Backup" Click="Button_Click_Restore"></MenuItem>
                 <MenuItem Header="Tablas por defecto" Click="Button_Click_Load"></MenuItem>
