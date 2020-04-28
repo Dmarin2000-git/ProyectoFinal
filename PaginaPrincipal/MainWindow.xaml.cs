@@ -76,14 +76,15 @@ namespace PaginaPrincipal
                     break;
 
                 case 3:
-                    cmd.CommandText = "Select * from Persona p inner join Empleado e on p.id = e.id ";
+                    cmd.CommandText = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2 ";
                     cmd.Connection = conn; //creamos comando para para realizar el select
-                    DataTable dt2 = new DataTable("Persona");
+                    DataTable dt2 = new DataTable("Empleado");
                     sda.Fill(dt2); //selecciona la tabla demandada
                     dataGrid3.ItemsSource = dt2.DefaultView;
                     break;
                 case 4:
-                    cmd.CommandText = "Select * from Persona p inner join Representante e on p.id = e.id ";
+                    cmd.CommandText = "select p.*,r.nombre as contacto, pp.apellido,pp.DNI, pp.direccion,pp.correo,pp.telefono from Proveedor p inner join Representante r on p.id = r.id_prov " +
+                        "inner join Persona pp on pp.nombre = r.nombre";
                     cmd.Connection = conn; //creamos comando para para realizar el select
                     DataTable dt3 = new DataTable("Persona");
                     sda.Fill(dt3); //selecciona la tabla demandada
@@ -194,7 +195,7 @@ namespace PaginaPrincipal
             //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
         }
 
-        private void ButtonTruncate_Click(object sender, RoutedEventArgs e) /*VACIAR TABLA ENTERA*/
+        private void ButtonTruncate_Click(object sender, RoutedEventArgs e) /*VACIAR TABLA ENTERA ARTICLE*/
         {
             MessageBoxResult result = MessageBox.Show("Se vaciará la tabla por completo. ¿Estás seguro de que quieres continuar?", "TR", MessageBoxButton.YesNo);
             switch (result)
@@ -211,6 +212,75 @@ namespace PaginaPrincipal
 
                 case MessageBoxResult.No:
                     MessageBox.Show("OPERACIÓN CANCELADA");
+                    break;
+            }
+        }
+
+        private void ButtonTruncateW_Click(object sender, RoutedEventArgs e) /*VACIAR TABLA ENTERA WAREHOUSE*/
+        {
+            MessageBoxResult result = MessageBox.Show("Se vaciará la tabla por completo. ¿Estás seguro de que quieres continuar?", "TW", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    SqlConnection conn = EstablecerConexion();
+                    SqlCommand command = new SqlCommand("TRUNCATE TABLE Almacenes", conn);//creamos comando
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();//ejecutamos comando
+                    MessageBox.Show("TABLA VACIADA", "TW");
+                    bindatagrid("Almacenes", 2);
+                    conn.Close();
+                    break;
+
+                case MessageBoxResult.No:
+                    MessageBox.Show("OPERACIÓN CANCELADA, TW");
+                    break;
+            }
+        }
+
+        private void ButtonTruncateE_Click(object sender, RoutedEventArgs e) /*VACIAR TABLA ENTERA EMPLOYEES*/
+        {
+            MessageBoxResult result = MessageBox.Show("Se vaciará la tabla por completo. ¿Estás seguro de que quieres continuar?", "TE", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    SqlConnection conn = EstablecerConexion();
+                    SqlCommand command = new SqlCommand("delete persona where variante = 2", conn);//creamos comando
+                    SqlCommand command1 = new SqlCommand("truncate table empleados ", conn);//creamos comando
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();//ejecutamos comando
+                    command1.ExecuteNonQuery();//ejecutamos comando
+                    MessageBox.Show("TABLA VACIADA", "TE");
+                    bindatagrid("Empleados", 2);
+                    conn.Close();
+                    break;
+
+                case MessageBoxResult.No:
+                    MessageBox.Show("OPERACIÓN CANCELADA, TE");
+                    break;
+            }
+        }
+
+        private void ButtonTruncateP_Click(object sender, RoutedEventArgs e) /*VACIAR TABLA PROVEEDORES*/
+        {
+            MessageBoxResult result = MessageBox.Show("Se vaciará la tabla por completo. ¿Estás seguro de que quieres continuar?", "TP", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    SqlConnection conn = EstablecerConexion();
+                    SqlCommand command = new SqlCommand("delete persona where variante = 1", conn);//creamos comando
+                    SqlCommand command1 = new SqlCommand("truncate table representante ", conn);//creamos comando
+                    SqlCommand command2 = new SqlCommand("truncate table proveedor ", conn);//creamos comando
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();//ejecutamos comando
+                    command1.ExecuteNonQuery();//ejecutamos comando
+                    command2.ExecuteNonQuery();//ejecutamos comando
+                    MessageBox.Show("TABLA VACIADA", "TP");
+                    bindatagrid("Empleados", 2);
+                    conn.Close();
+                    break;
+
+                case MessageBoxResult.No:
+                    MessageBox.Show("OPERACIÓN CANCELADA, TP");
                     break;
             }
         }
@@ -234,6 +304,21 @@ namespace PaginaPrincipal
             DataGridFilter.ItemsSource = dt.DefaultView;
            
         }
+
+        private void BoxProveedores_Selected(object sender, RoutedEventArgs e) /*ABRIR TABLA FILTRO PROVEEDORES */
+        {
+            SqlConnection conn = EstablecerConexion();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            cmd.CommandText = "select p.*,r.nombre as contacto, pp.apellido,pp.DNI, pp.direccion,pp.correo,pp.telefono from Proveedor p inner join Representante r on p.id = r.id_prov " +
+                        "inner join Persona pp on pp.nombre = r.nombre"; 
+            cmd.Connection = conn; //creamos comando para para realizar el select
+            DataTable dt = new DataTable("Proveedores");
+            sda.Fill(dt); //selecciona la tabla demandada
+            DataGridFilter.ItemsSource = dt.DefaultView;
+        }
+
 
         private void Button_Click(object sender, RoutedEventArgs e) /*FILTRO ARTICLE*/
         {
@@ -390,7 +475,7 @@ namespace PaginaPrincipal
             }
         }
 
-        private void Button_Click_OutArtcile(object sender, RoutedEventArgs e)
+        private void Button_Click_OutArtcile(object sender, RoutedEventArgs e) /*SALIDAD DE ARTICLES*/
         {
             MessageBoxResult result = MessageBox.Show("Se forzaran la salida de lso articulos ¿Desea continuar?", "EXIT", MessageBoxButton.YesNo);
             switch (result)
@@ -424,5 +509,6 @@ namespace PaginaPrincipal
 
             }
         }
+
     }
 }

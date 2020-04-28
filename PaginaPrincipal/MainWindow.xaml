@@ -55,10 +55,11 @@
                                 <TextBlock TextWrapping="WrapWithOverflow" Margin="0,0,-10,0">
                                             <Grid Height="336" Width="733">
                                                 <DataGrid x:Name="dataGrid2" Margin="0,0,219,0" IsReadOnly="True"/>
-                                                <Label Margin="550,35,30,265" HorizontalContentAlignment="Center" Width="153">ELIMINAR FILA POR ID:</Label>
-                                                <TextBox Margin="550,76,30,234" Name="DeleteID1"></TextBox>
-                                                <Button Margin="550,107,30,203" Name="ButtonDelete1" Click="ButtonDelete_Click">ELIMINAR</Button>
-                                                <Button Height="25" Margin="570,289,10,22" Name="ButtonTruncate1" Click="ButtonTruncate_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
+                                                <Label Margin="550,10,30,290" HorizontalContentAlignment="Center" Width="153">ELIMINAR FILA POR ID:</Label>
+                                                <TextBox Margin="550,50,30,260" Name="DeleteID1"></TextBox>
+                                                <Button Margin="550,80,30,230" Name="ButtonDelete1" Click="ButtonDelete_Click">ELIMINAR</Button>
+                                                <Button Height="25" Margin="570,292,10,19" Name="ButtonTruncate1" Click="ButtonTruncateW_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
+                                               <!-- <Button Height="25" Margin="570,250,10,61" Name="AddWarehouse" Click="AddWarehouse_Click">AÑADIR ALMACÉN</Button> -->
                                             </Grid>
 
                                 </TextBlock>
@@ -72,7 +73,8 @@
                                             <Label Margin="530,10,10,290" HorizontalAlignment="Center">ELIMINAR FILA</Label>
                                                 <TextBox Margin="550,50,30,260" Name="DeleteID2"></TextBox>
                                                 <Button Margin="550,80,30,230" Name="ButtonDelete2" Click="ButtonDelete_Click">ELIMINAR</Button>
-                                                <Button Height="25" Margin="570,292,10,18" Name="ButtonTruncate2" Click="ButtonTruncate_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
+                                                <Button Height="25" Margin="570,292,10,20" Name="ButtonTruncate2" Click="ButtonTruncateE_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
+                                                <Button Height="25" Margin="570,249,10,62" Name="AddEmployee" Click="ButtonTruncate_Click" >AÑADIR EMPLEADO</Button>
                                         </Grid>
                                     </TextBlock>
                                 </TabItem.Content>
@@ -80,8 +82,16 @@
                             <TabItem Name="provider" Header="Proveedores" Height="30" Width="100">
                                 <TabItem.Content>
                                     <TextBlock TextWrapping="WrapWithOverflow">
+                                        <Grid Height="336" Width="733">
+                                            <DataGrid x:Name="dataGrid4"  Margin="0,0,219,0" IsReadOnly="True" Height="337" Width="515"/>
+                                            <Label Margin="530,10,10,290" HorizontalAlignment="Center">ELIMINAR FILA</Label>
+                                                <TextBox Margin="550,50,30,260" Name="DeleteID3"></TextBox>
+                                                <Button Margin="550,80,30,230" Name="ButtonDelete3" Click="ButtonDelete_Click">ELIMINAR</Button>
+                                                <Button Height="25" Margin="570,292,10,20" Name="ButtonTruncate3" Click="ButtonTruncateP_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
+                                                <Button Height="25" Margin="570,249,10,62" Name="Provider" Click="ButtonTruncate_Click" >AÑADIR PROVEEDOR</Button>
+                                        </Grid>
                                         
-                                            <DataGrid x:Name="dataGrid4" Margin="0,0,132,0" IsReadOnly="True"  Height="337" Width="515"/>
+                                            
 
 
                                     </TextBlock>
@@ -90,13 +100,12 @@
                             <TabItem Name="filter" Header="Filtro" Height="30" Width="100">
                                 <TextBlock><InlineUIContainer/><InlineUIContainer>
                                         <Grid Height="336" Width="743" Margin="10">
-                                            <ComboBox Margin="0,29,552,284" Name="ComboboxFiltro">
+                                            <ComboBox Margin="241,30,311,283" Name="ComboboxFiltro">
                                                 <ComboBoxItem x:Name="boxArticle" Content="ARTICLE" Selected="BoxArticle_Selected"/>
-                                                <ComboBoxItem x:Name="boxAlmacenes" Content="ALMACENES"/>
                                                 <ComboBoxItem x:Name="boxEmpleados" Content="EMPLEADOS"/>
-                                                <ComboBoxItem x:Name="boxProveedores" Content="PROVEEDORES"/>
+                                                <ComboBoxItem x:Name="boxProveedores" Content="PROVEEDORES" Selected="BoxProveedores_Selected"/>
                                             </ComboBox>
-                                            <Label Margin="-2,0,541,307"/>
+                                            <Label Margin="0,26,507,281"> Selecciona una tabla para cargar de nuevo:</Label>
                                             <DataGrid Margin="10,66,311,20" Name="DataGridFilter"/>
                                             <Grid Margin="447,1,23,36" Background="AliceBlue" ShowGridLines="True" >
                                                 <TabControl>
@@ -115,13 +124,10 @@
                                                         </Grid>
                                                         
                                                     </TabItem>
-                                                    <TabItem Header="ALMACEN" Name="warehousefilter">
-                                                        
-                                                    </TabItem>
                                                     <TabItem Header="EMPLEADOS" Name="emplyeefilter">
                                                         
                                                     </TabItem>
-                                                    <TabItem Header="PROV." Name="providerfilter">
+                                                    <TabItem Header="PROVEEDORES" Name="providerfilter">
                                                         
                                                     </TabItem>
                                                     <TextBlock Height="100" TextWrapping="Wrap" Text="TextBlock" Width="100"/>
