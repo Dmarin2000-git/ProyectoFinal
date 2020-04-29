@@ -184,7 +184,7 @@ namespace PaginaPrincipal
                     SqlCommand command = new SqlCommand("DELETE Article where id =" + delete_data, conn);//creamos comando
                     command.Connection.Open();
                     command.ExecuteNonQuery();//ejecutamos comando
-                    MessageBox.Show("FILA ELIMINADA CON EL VALOR: " + delete_data);
+                    MessageBox.Show("FILA ELIMINADA");
                     bindatagrid("Article", 1);//actualizamos la tabla
                     conn.Close();
                     DeleteID.Clear();//limpimaos el textbox
@@ -194,6 +194,95 @@ namespace PaginaPrincipal
             catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
             //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
         }
+
+        private void ButtonDelete_Click_W(object sender, RoutedEventArgs e) /*ELIMINAR FILA TABLA ALMACENES*/
+        {
+            SqlConnection conn = EstablecerConexion(); //establecemos conexion
+
+            try
+            {
+                int delete_data = int.Parse(DeleteID1.Text); //convertimos el textbox en int
+                if (delete_data == 0)
+                {
+                    MessageBox.Show("EL VALOR NO PUEDE SER 0"); //capturamos excepcion manualmente
+                }
+                else
+                {
+                    SqlCommand command = new SqlCommand("DELETE Almacenes where id =" + delete_data, conn);//creamos comando
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();//ejecutamos comando
+                    MessageBox.Show("FILA ELIMINADA");
+                    bindatagrid("Almacenes", 2);//actualizamos la tabla
+                    conn.Close();
+                    DeleteID1.Clear();//limpimaos el textbox
+                }
+
+            }
+            catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
+            //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
+        }
+
+        private void ButtonDelete_Click_E(object sender, RoutedEventArgs e) /*ELIMINAR FILA TABLA EMPLEADOS*/
+        {
+            SqlConnection conn = EstablecerConexion(); //establecemos conexion
+
+            try
+            {
+                String delete_data = DeleteID2.Text; //convertimos el textbox en int
+                if (String.IsNullOrEmpty(DeleteID2.Text))
+                {
+                    MessageBox.Show("Introduzca un nombre"); //capturamos excepcion manualmente
+                }
+                else
+                {
+                    SqlCommand command = new SqlCommand("DELETE Empleado where nombre =" + delete_data, conn);
+                    SqlCommand command1 = new SqlCommand("DELETE Persona where nombre =" + delete_data, conn);//creamos comando
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                    command1.ExecuteNonQuery();//ejecutamos comando
+                    MessageBox.Show("FILA ELIMINADA");
+                    bindatagrid("Empleado", 3);//actualizamos la tabla
+                    conn.Close();
+                    DeleteID2.Clear();//limpimaos el textbox
+                }
+
+            }
+            catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
+            //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
+        }
+
+        private void ButtonDelete_Click_P(object sender, RoutedEventArgs e) /*ELIMINAR FILA TABLA PROVEEDORES*/
+        {
+            SqlConnection conn = EstablecerConexion(); //establecemos conexion
+
+            try
+            {
+                int delete_data = int.Parse(DeleteID3.Text);
+                String delete_data1 = DeleteID4.Text; //convertimos el textbox en int
+                if (String.IsNullOrEmpty(DeleteID3.Text) || String.IsNullOrEmpty(DeleteID4.Text))
+                {
+                    MessageBox.Show("Introduzca los valores"); //capturamos excepcion manualmente
+                }
+                else
+                {
+                    SqlCommand command = new SqlCommand("DELETE Proveedor where id =" + delete_data, conn);
+                    SqlCommand command1 = new SqlCommand("DELETE Representante where nombre =" + delete_data1, conn);
+                    SqlCommand command2 = new SqlCommand("DELETE Persona where nombre =" + delete_data1, conn);//creamos comando
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                    command1.ExecuteNonQuery();
+                    command2.ExecuteNonQuery();//ejecutamos comando
+                    MessageBox.Show("FILA ELIMINADA ");
+                    bindatagrid("Proveedores", 4);//actualizamos la tabla
+                    conn.Close();
+                    DeleteID3.Clear();//limpimaos el textbox
+                    DeleteID4.Clear();
+                }
+
+            }
+            catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
+        }
+
 
         private void ButtonTruncate_Click(object sender, RoutedEventArgs e) /*VACIAR TABLA ENTERA ARTICLE*/
         {
@@ -319,16 +408,28 @@ namespace PaginaPrincipal
             DataGridFilter.ItemsSource = dt.DefaultView;
         }
 
+        private void BoxEmpleados_Selected(object sender, RoutedEventArgs e) /*ABRIR TABLA FILTRO EMPLEADOS*/
+        {
+            SqlConnection conn = EstablecerConexion();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            cmd.CommandText = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2";
+            cmd.Connection = conn; //creamos comando para para realizar el select
+            DataTable dt = new DataTable("Proveedores");
+            sda.Fill(dt); //selecciona la tabla demandada
+            DataGridFilter.ItemsSource = dt.DefaultView;
+        }
 
-        private void Button_Click(object sender, RoutedEventArgs e) /*FILTRO ARTICLE*/
+        private void Button_Click_AFilter(object sender, RoutedEventArgs e) /*FILTRO ARTICLE*/
         {
             //definimos la condición del comando
-            String condicion = "";
-            String and = " and ";
-            int avisador = 0;
+            String condicion = ""; //este sera el select
+            String and = " and "; // union 
+            int avisador = 0; // indice para saber cuando no se ha seleccionado ningun filtro
 
             int idprov= 0;
-            String idprString = null;
+            String idprString = null; //igualamos los valores de los text box en variables
 
             String art_code = null;
 
@@ -338,13 +439,14 @@ namespace PaginaPrincipal
             double cost;
             String costString;
 
-            if (string.IsNullOrWhiteSpace(codefilter.Text))
+            if (string.IsNullOrWhiteSpace(codefilter.Text)) 
             {
-                //MessageBox.Show("Art_code esta vacio");
+                //Si esta vacio el avisador suma
                 avisador++;
             }
             else 
             {
+                //si no esta vacio hace el select con la condicion del textbox
                 art_code = codefilter.Text;
                 condicion = "SELECT * FROM Article WHERE art_code ="+"'"+art_code+"'";
             }
@@ -358,11 +460,11 @@ namespace PaginaPrincipal
                 id_alm = int.Parse(almfilter.Text);
                 id_almSTring = id_alm.ToString();
 
-                if (string.IsNullOrWhiteSpace(codefilter.Text))
+                if (string.IsNullOrWhiteSpace(codefilter.Text)) // si el filtro anterior a este esta vacio crea de nuevo el select con el filtro de este textbox
                 {
                     condicion = "SELECT * FROM Article WHERE id_alm ="+id_alm;
                 }
-                else { condicion += and + "id_alm = " + id_alm; }
+                else { condicion += and + "id_alm = " + id_alm; } //si no está vacio añade tu condicion a la cola
             }
 
             if (string.IsNullOrWhiteSpace(provfilter.Text))
@@ -374,7 +476,7 @@ namespace PaginaPrincipal
                 idprov = int.Parse(provfilter.Text);
                 idprString = idprov.ToString();
 
-                if (string.IsNullOrWhiteSpace(almfilter.Text) || string.IsNullOrWhiteSpace(codefilter.Text))
+                if (string.IsNullOrWhiteSpace(almfilter.Text) && string.IsNullOrWhiteSpace(codefilter.Text))
                 {
                     condicion = "SELECT * FROM Article WHERE id_prov =" + idprov;
                 }
@@ -392,13 +494,14 @@ namespace PaginaPrincipal
                 cost = double.Parse(costfilter.Text);
                 costString = cost.ToString();
 
-                if (string.IsNullOrWhiteSpace(almfilter.Text) || string.IsNullOrWhiteSpace(codefilter.Text) || (string.IsNullOrWhiteSpace(almfilter.Text)))
+                if (string.IsNullOrWhiteSpace(almfilter.Text) && string.IsNullOrWhiteSpace(codefilter.Text) && (string.IsNullOrWhiteSpace(almfilter.Text)))
                 {
                     condicion = "SELECT * FROM Article WHERE precio =" + cost;
                 }
                 else { condicion = and + "precio = " + cost; }
                 
             }
+
 
             //MessageBox.Show(condicion);
             SqlConnection conn = EstablecerConexion();
@@ -407,13 +510,9 @@ namespace PaginaPrincipal
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
-            if (avisador == 4)
+            if (avisador == 4) // si el avisador es 4 no se ha seleccionado ningún filtro
             {
-                /*cmd.CommandText = "Select * from Article";
-                cmd.Connection = conn; //creamos comando para para realizar el select
-                DataTable dt = new DataTable("Article");
-                sda.Fill(dt); //selecciona la tabla demandada
-                DataGridFilter.ItemsSource = dt.DefaultView;*/
+                MessageBox.Show("Introduzca algún filtro"); 
             }
             else {
                 MessageBox.Show(condicion);
@@ -424,6 +523,174 @@ namespace PaginaPrincipal
                 DataGridFilter.ItemsSource = dt.DefaultView;
             }
 
+        }
+
+        private void Button_Click_WFilter(object sender, RoutedEventArgs e) /*FILTRO DE EMPLEADOS*/
+        {
+            String condicion = "";
+            String and = " and ";
+            int avisador = 0;
+
+            String cargo = null;
+            String nombre = null;
+            String apellido = null;
+
+            int id_alm = 0;
+            String id_almSTring = null;
+
+            if (String.IsNullOrEmpty(cargofilter.Text)) {
+                 avisador ++;
+            }
+            else {
+                cargo = cargofilter.Text;
+                condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2"+and+ "cargo = "+"'"+cargo+"'";
+            }
+
+            if (String.IsNullOrEmpty(almfilter.Text))
+            {
+                avisador++;
+            }
+            else {
+                id_alm = int.Parse(almfilter.Text);
+                id_almSTring = id_alm.ToString();
+
+                if (string.IsNullOrWhiteSpace(cargofilter.Text))
+                {
+                    condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2" + and + "e.almacenID= "+ id_almSTring;
+                }
+                else { condicion += and + "e.almacenID = " + id_almSTring; }
+            }
+
+            if (String.IsNullOrWhiteSpace(nombrefilter.Text))
+            {
+                avisador++;
+            }
+            else {
+                nombre = nombrefilter.Text;
+
+                if (String.IsNullOrEmpty(cargofilter.Text) && String.IsNullOrEmpty(almfilter.Text))
+                {
+                    condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2" + and + "p.nombre = " + "'"+nombre+"'";
+                }
+                else {
+                    condicion += and + "p.nombre = " + "'"+nombre+"'";
+                }
+            }
+
+            if (String.IsNullOrEmpty(apellidofilter.Text))
+            {
+                avisador++;
+            }
+            else {
+                apellido = apellidofilter.Text;
+                if (String.IsNullOrEmpty(cargofilter.Text) && String.IsNullOrEmpty(almfilter.Text) && String.IsNullOrEmpty(nombrefilter.Text))
+                {
+                    condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2" + and + "p.apellido = " + "'"+apellido+"'";
+                }
+                else {
+                        condicion += and + "p.apellido = " + "'"+apellido+"'";
+                }
+            }
+            //MessageBox.Show(condicion);
+            SqlConnection conn = EstablecerConexion();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+
+            if (avisador == 4)
+            {
+                MessageBox.Show("Introduzca algún filtro");
+            }
+            else
+            {
+                MessageBox.Show(condicion);
+                cmd.CommandText = condicion;
+                cmd.Connection = conn; //creamos comando para para realizar el select
+                DataTable dt = new DataTable("Empleado");
+                sda.Fill(dt); //selecciona la tabla demandada
+                DataGridFilter.ItemsSource = dt.DefaultView;
+            }
+
+        }
+
+        private void Button_Click_PFilter(object sender, RoutedEventArgs e) /*FILTRO PARA PROVEEDORES*/
+        {
+            String condicion = ""; 
+            String and = " and ";
+            int avisador = 0;
+
+            String nom_prov = null;
+            String nom_repre = null;
+            String apellido_repre = null;
+
+            if (String.IsNullOrEmpty(provnamefilter.Text))
+            {
+                avisador++;
+            }
+            else {
+                nom_prov = provnamefilter.Text;
+                condicion = "select p.*,r.nombre as contacto, pp.apellido,pp.DNI, pp.direccion,pp.correo,pp.telefono from Proveedor p inner join Representante r on p.id = r.id_prov " +
+                        "inner join Persona pp on pp.nombre = r.nombre" + and + "p.prov_name = " + "'" + nom_prov + "'";
+            }
+
+            if (String.IsNullOrEmpty(reprenamefilter.Text))
+            {
+                avisador++;
+            }
+            else
+            {
+                nom_repre = reprenamefilter.Text;
+                if (String.IsNullOrEmpty(provnamefilter.Text))
+                {
+                    condicion = "select p.*,r.nombre as contacto, pp.apellido,pp.DNI, pp.direccion,pp.correo,pp.telefono from Proveedor p inner join Representante r on p.id = r.id_prov " +
+                        "inner join Persona pp on pp.nombre = r.nombre" + and + "pp.nombre = " + "'" + nom_repre + "'";
+                }
+                else
+                {
+                    condicion += and + "pp.nombre = " + "'" + nom_repre + "'";
+                }
+            }
+
+                if (String.IsNullOrEmpty(represecondfilter.Text))
+                {
+                    avisador++;
+                }
+                else
+                {
+                    apellido_repre = represecondfilter.Text;
+                    if (String.IsNullOrEmpty(cargofilter.Text) && String.IsNullOrEmpty(almfilter.Text))
+                    {
+                        condicion = "select p.*,r.nombre as contacto, pp.apellido,pp.DNI, pp.direccion,pp.correo,pp.telefono from Proveedor p inner join Representante r on p.id = r.id_prov " +
+                        "inner join Persona pp on pp.nombre = r.nombre" + and + "pp.apellido = " + "'" + apellido_repre + "'";
+                    }
+                    else
+                    {
+                        condicion += and + "pp.apellido = " + "'" + apellido_repre + "'";
+                    }
+
+                }
+
+            //MessageBox.Show(condicion);
+            SqlConnection conn = EstablecerConexion();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+
+            if (avisador == 4)
+            {
+                MessageBox.Show("Introduzca algún filtro");
+            }
+            else
+            {
+                MessageBox.Show(condicion);
+                cmd.CommandText = condicion;
+                cmd.Connection = conn; //creamos comando para para realizar el select
+                DataTable dt = new DataTable("Proveedor");
+                sda.Fill(dt); //selecciona la tabla demandada
+                DataGridFilter.ItemsSource = dt.DefaultView;
+            }
         }
 
         private void Button_Click_Restore(object sender, RoutedEventArgs e) /*RESTAURAR LAS TABLAS DEL ULTIMO BACKUP*/
@@ -475,7 +742,7 @@ namespace PaginaPrincipal
             }
         }
 
-        private void Button_Click_OutArtcile(object sender, RoutedEventArgs e) /*SALIDAD DE ARTICLES*/
+        private void Button_Click_OutArtcile(object sender, RoutedEventArgs e) /*SALIDA DE ARTICLES*/
         {
             MessageBoxResult result = MessageBox.Show("Se forzaran la salida de lso articulos ¿Desea continuar?", "EXIT", MessageBoxButton.YesNo);
             switch (result)
@@ -507,6 +774,20 @@ namespace PaginaPrincipal
                     MessageBox.Show("Operación cancelada", "EXIT");
                     break;
 
+            }
+        }
+
+        private void Button_Click_Exit(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("¿Seguro que desea salir de la aplicación?", "EXIT", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    this.Close(); 
+                break;
+                case MessageBoxResult.No:
+                    
+                    break;
             }
         }
 
