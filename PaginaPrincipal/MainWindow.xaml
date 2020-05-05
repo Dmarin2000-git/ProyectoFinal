@@ -17,7 +17,7 @@
                 <MenuItem Header="Forzar salida de datos" Click="Button_Click_OutArtcile"></MenuItem>
                 <MenuItem Header="Copia de Seguridad" Click="Button_Click_BackUp"></MenuItem>
                 <MenuItem Header="Restaurar tablas del Backup" Click="Button_Click_Restore"></MenuItem>
-                <MenuItem Header="Tablas por defecto" Click="Button_Click_Load"></MenuItem>
+                <MenuItem Header="Actualizar" Click="Button_Click_Load"></MenuItem>
                 <MenuItem Header="Salir" Click="Button_Click_Exit"></MenuItem>
             </MenuItem>
             <MenuItem Header="Configuración">
@@ -61,7 +61,9 @@
                                                 <Label Margin="580,40,45,272" HorizontalAlignment="Center" Width="108">Introduce un id:</Label>
                                                 <TextBox Margin="550,64,30,246" Name="DeleteID1"></TextBox>
                                                 <Button Margin="550,95,30,215" Name="ButtonDelete1" Click="ButtonDelete_Click_W">ELIMINAR</Button>
+                                                <Button Height="25" Margin="570,249,10,62" Name="AddWarehouse" Click="Button_AddWarehouse" >AÑADIR ALMACEN</Button>
                                                 <Button Height="25" Margin="570,292,10,19" Name="ButtonTruncate1" Click="ButtonTruncateW_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
+                                                <Button Height="25" Margin="570,207,10,104" x:Name="AddWarehouse_Copy" Click="Button_UpdateWarehouse" Content="ACTUALIZAR S/E" />
                                                <!-- <Button Height="25" Margin="570,250,10,61" Name="AddWarehouse" Click="AddWarehouse_Click">AÑADIR ALMACÉN</Button> -->
                                             </Grid>
 
@@ -78,7 +80,7 @@
                                                 <TextBox Margin="550,64,30,246" Name="DeleteID2"></TextBox>
                                                 <Button Margin="550,95,30,215" Name="ButtonDelete2" Click="ButtonDelete_Click_E">ELIMINAR</Button>
                                                 <Button Height="25" Margin="570,292,10,20" Name="ButtonTruncate2" Click="ButtonTruncateE_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
-                                                <Button Height="25" Margin="570,249,10,62" Name="AddEmployee" Click="ButtonTruncate_Click" >AÑADIR EMPLEADO</Button>
+                                                <Button Height="25" Margin="570,249,10,62" Name="AddEmployee" Click="Button_AddProvider" >AÑADIR EMPLEADO</Button>
                                         </Grid>
                                     </TextBlock>
                                 </TabItem.Content>

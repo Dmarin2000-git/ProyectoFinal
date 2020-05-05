@@ -32,8 +32,8 @@ namespace PaginaPrincipal
 
         }
 
-        public SqlConnection EstablecerConexion()
-        { /*ABRIR LA CONEXION CON LA BASE DE DATOS*/
+        public SqlConnection EstablecerConexion()/*ABRIR LA CONEXION CON LA BASE DE DATOS*/
+        { 
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = ConfigurationManager.ConnectionStrings["connectionddbb"].ConnectionString;
             return conn;
@@ -220,6 +220,14 @@ namespace PaginaPrincipal
             }
             catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
             //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
+        }
+
+        private void Button_UpdateWarehouse(object sender, RoutedEventArgs e) /*ACTUALIZAR STOCK Y EMPLEADOS DE LOS ALMACENES*/
+        {
+            SqlConnection conn = EstablecerConexion();
+            SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
+            sql_cmnd2.CommandType = CommandType.StoredProcedure;
+            sql_cmnd2.ExecuteNonQuery();
         }
 
         private void ButtonDelete_Click_E(object sender, RoutedEventArgs e) /*ELIMINAR FILA TABLA EMPLEADOS*/
@@ -777,7 +785,7 @@ namespace PaginaPrincipal
             }
         }
 
-        private void Button_Click_Exit(object sender, RoutedEventArgs e)
+        private void Button_Click_Exit(object sender, RoutedEventArgs e) /*SALIR DE LA APLIACION*/
         {
             MessageBoxResult result = MessageBox.Show("¿Seguro que desea salir de la aplicación?", "EXIT", MessageBoxButton.YesNo);
             switch (result)
@@ -789,6 +797,20 @@ namespace PaginaPrincipal
                     
                     break;
             }
+        }
+
+        private void Button_AddWarehouse(object sender, RoutedEventArgs e) /*AÑADIR ALMACENES*/
+        {
+            Window1 mostrar = new Window1();
+
+            mostrar.Show();
+        }
+
+        private void Button_AddProvider(object sender, RoutedEventArgs e)
+        {
+
+            Window_Empleados mostrar = new Window_Empleados();
+            mostrar.Show();
         }
 
     }
