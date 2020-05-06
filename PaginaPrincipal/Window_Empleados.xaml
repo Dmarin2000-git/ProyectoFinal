@@ -5,11 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PaginaPrincipal"
         mc:Ignorable="d"
-        Title="AÑADIR EMPELADOS" Height="407.776" Width="418.013"
+        Title="AÑADIR EMPELADOS" Height="312.586" Width="787.198"
         Icon="WA317.ico">
-    <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="247,303,0,0" VerticalAlignment="Top" Width="75"/>
-
+    <Grid Margin="0,0,2,4">
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="384,50,10,98" />
+        <Button Content="INSERTAR" HorizontalAlignment="Left" Margin="637,237,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="Button_Click"/>
+        <Label Content="RELLENA LOS CAMPOS PARA INSERTAR UN NUEVO EMPLEADO:" HorizontalAlignment="Left" Margin="30,13,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="517,103,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="234" Name="cargoAlmacen"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="517,143,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="234" Name="idAlmacen"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="517,65,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="234" Name="idEmpleado"/>
+        <TextBlock HorizontalAlignment="Left" Margin="411,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Cargo en"/><Run Text=" Almacen"/><Run Text=" "/><Run Text=":"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="399,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Numero de Almacen"/><Run Text=" "/><Run Text=":"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="425,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="4.311,1.297"><Run Text="Id"/><Run Text=" de Empleado "/><Run Text=":"/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="120,48,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="234" x:Name="nombreEmpleado"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="120,86,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="234" x:Name="apellidoEmpleado"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="120,124,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="234" x:Name="DNIEmpleado"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="120,162,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="234" x:Name="correoEmpleado"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="120,200,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="234" x:Name="direccionEmpleado"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="120,238,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="234" x:Name="telefonoEmpleado"/>
+        <Button Content="SALIR" HorizontalAlignment="Left" Margin="399,236,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="Button_ClickExit"/>
+        <TextBlock HorizontalAlignment="Left" Margin="65,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="4.311,1.297"><Run Text="Nombre "/><Run Text=":"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="65,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="4.311,1.297" Text="Apellido :"/>
+        <TextBlock HorizontalAlignment="Left" Margin="89,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="4.311,1.297"><Run Text="DNI"/><Run Text=" "/><Run Text=":"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="60,200,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="4.311,1.297" Text="Dirección :"/>
+        <TextBlock HorizontalAlignment="Left" Margin="64,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="4.311,1.297" Text="Teléfono :" Height="23"/>
+        <TextBlock HorizontalAlignment="Left" Margin="73,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="4.311,1.297" Text="Correo :"/>
 
     </Grid>
 </Window>

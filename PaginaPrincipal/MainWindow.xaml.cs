@@ -225,9 +225,11 @@ namespace PaginaPrincipal
         private void Button_UpdateWarehouse(object sender, RoutedEventArgs e) /*ACTUALIZAR STOCK Y EMPLEADOS DE LOS ALMACENES*/
         {
             SqlConnection conn = EstablecerConexion();
+            conn.Open();
             SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
             sql_cmnd2.CommandType = CommandType.StoredProcedure;
             sql_cmnd2.ExecuteNonQuery();
+            conn.Close();
         }
 
         private void ButtonDelete_Click_E(object sender, RoutedEventArgs e) /*ELIMINAR FILA TABLA EMPLEADOS*/
@@ -529,6 +531,7 @@ namespace PaginaPrincipal
                 DataTable dt = new DataTable("Article");
                 sda.Fill(dt); //selecciona la tabla demandada
                 DataGridFilter.ItemsSource = dt.DefaultView;
+                conn.Close();
             }
 
         }
@@ -618,6 +621,7 @@ namespace PaginaPrincipal
                 DataTable dt = new DataTable("Empleado");
                 sda.Fill(dt); //selecciona la tabla demandada
                 DataGridFilter.ItemsSource = dt.DefaultView;
+                conn.Close();
             }
 
         }
@@ -698,6 +702,7 @@ namespace PaginaPrincipal
                 DataTable dt = new DataTable("Proveedor");
                 sda.Fill(dt); //selecciona la tabla demandada
                 DataGridFilter.ItemsSource = dt.DefaultView;
+                conn.Close();
             }
         }
 
