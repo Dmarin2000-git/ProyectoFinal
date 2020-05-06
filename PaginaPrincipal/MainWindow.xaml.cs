@@ -229,7 +229,9 @@ namespace PaginaPrincipal
             SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
             sql_cmnd2.CommandType = CommandType.StoredProcedure;
             sql_cmnd2.ExecuteNonQuery();
+            MessageBox.Show("Stock y Empleados de cada almacen actualizados");
             conn.Close();
+            bindatagrid("Almacenes", 2);
         }
 
         private void ButtonDelete_Click_E(object sender, RoutedEventArgs e) /*ELIMINAR FILA TABLA EMPLEADOS*/
@@ -557,12 +559,12 @@ namespace PaginaPrincipal
                 condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2"+and+ "cargo = "+"'"+cargo+"'";
             }
 
-            if (String.IsNullOrEmpty(almfilter.Text))
+            if (String.IsNullOrEmpty(almidfilter.Text))
             {
                 avisador++;
             }
             else {
-                id_alm = int.Parse(almfilter.Text);
+                id_alm = int.Parse(almidfilter.Text);
                 id_almSTring = id_alm.ToString();
 
                 if (string.IsNullOrWhiteSpace(cargofilter.Text))

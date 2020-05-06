@@ -49,25 +49,37 @@ namespace PaginaPrincipal
                         MessageBox.Show("Para poder insertar un almacén, es necesario rellenar todos los campos.");
                     }
                     else {
-                        
-                        SqlCommand cmd = new SqlCommand();
-                        SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
-                        String id = idAlmacen.Text;
-                        String nombre = nombreAlmacen.Text;
-                        String direccion = direccionAlmacen.Text;
-                        String stock = stockAlmacen.Text;
-                        String empleados = empleadosAlmacen.Text;
-                        String coma = ",";
-                        String comilla = "'";
+                        try
+                        {
 
-                        cmd.CommandText = "insert into Almacenes values(" + id + coma + comilla + nombre + comilla + coma + stock + coma + comilla + direccion + comilla + coma + empleados + ")";
-                        //String prueba = "insert into Almacenes values(" + id + coma + comilla + nombre + comilla + coma + stock + coma + comilla + direccion + comilla + coma + empleados+")";
-                        //MessageBox.Show(prueba);
+                            SqlCommand cmd = new SqlCommand();
+                            SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
-                        cmd.Connection = conn; //creamos comando para para realizar el select
-                        cmd.ExecuteNonQuery();
-                        MessageBox.Show("Tabla Almacenes actualizada");
+                            String id = idAlmacen.Text;
+                            String nombre = nombreAlmacen.Text;
+                            String direccion = direccionAlmacen.Text;
+                            String stock = stockAlmacen.Text;
+                            String empleados = empleadosAlmacen.Text;
+                            String coma = ",";
+                            String comilla = "'";
+
+                            cmd.CommandText = "insert into Almacenes values(" + id + coma + comilla + nombre + comilla + coma + stock + coma + comilla + direccion + comilla + coma + empleados + ")";
+                            //String prueba = "insert into Almacenes values(" + id + coma + comilla + nombre + comilla + coma + stock + coma + comilla + direccion + comilla + coma + empleados+")";
+                            //MessageBox.Show(prueba);
+
+                            cmd.Connection = conn; //creamos comando para para realizar el select
+                            cmd.ExecuteNonQuery();
+                            MessageBox.Show("Tabla Almacenes actualizada");
+
+                            idAlmacen.Clear();
+                            nombreAlmacen.Clear();
+                            direccionAlmacen.Clear();
+                            stockAlmacen.Clear();
+                            empleadosAlmacen.Clear();
+
+                        }
+                        catch (SqlException ex) { MessageBox.Show(ex.ToString()); }
                     }
 
                     break;
