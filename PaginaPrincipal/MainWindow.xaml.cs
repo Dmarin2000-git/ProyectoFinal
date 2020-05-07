@@ -820,5 +820,10 @@ namespace PaginaPrincipal
             mostrar.Show();
         }
 
+        private void ButtonAddProvider_Click(object sender, RoutedEventArgs e)
+        {
+            Window2 mostrar = new Window2();
+            mostrar.Show();
+        }
     }
 }

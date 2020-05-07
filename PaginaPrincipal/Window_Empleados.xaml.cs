@@ -92,6 +92,8 @@ namespace PaginaPrincipal
                             direccionEmpleado.Clear();
                             telefonoEmpleado.Clear();
 
+                            conn.Close();
+
                         }
                         catch (SqlException ex) { MessageBox.Show(ex.ToString()); }
                     }

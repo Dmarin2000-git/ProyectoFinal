@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PaginaPrincipal"
         mc:Ignorable="d"
-        Icon="D:\Documentos\Informatica\Projecte\ProyectoFinal\PaginaPrincipal\WA317.ico"
+        Icon="WA317.ico"
         Title="WA317" Height="494" Width="966"
+        SizeToContent="WidthAndHeight"
         >
 
     <DockPanel>
@@ -28,7 +29,7 @@
 
         <Grid Height="429" VerticalAlignment="Bottom" Margin="0,-8,0,0">
 
-            <TabControl Margin="0,0,20,0" HorizontalAlignment="Right" Width="928" Height="429" VerticalAlignment="Bottom" >
+            <TabControl Margin="10,10,20,0" >
 
                 <TabItem Header="CONSULTA" Height="40" Width="100">
 
@@ -36,7 +37,7 @@
 
                         <TabControl TabStripPlacement="Left" Margin="0, 0, 0, 10">
                             <TabItem Name="Artículos" Header="Artículos" Height="30" Width="100">
-                                <TextBlock TextWrapping="WrapWithOverflow" Height="335" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="740"><InlineUIContainer>
+                                <TextBlock TextWrapping="WrapWithOverflow" Margin="54,10,0,0"><InlineUIContainer>
                                             <DataGrid x:Name="dataGrid1" IsReadOnly="True" Height="326" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="511"/>
                             
                                     </InlineUIContainer><InlineUIContainer>
@@ -95,7 +96,7 @@
                                                 <TextBox Margin="550,64,30,246" Name="DeleteID3"></TextBox>
                                                 <Button Margin="550,155,30,155" Name="ButtonDelete3" Click="ButtonDelete_Click_P">ELIMINAR</Button>
                                                 <Button Height="25" Margin="570,292,10,20" Name="ButtonTruncate3" Click="ButtonTruncateP_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
-                                                <Button Height="25" Margin="570,249,10,62" Name="Provider" Click="ButtonTruncate_Click" >AÑADIR PROVEEDOR</Button>
+                                                <Button Height="25" Margin="570,249,10,62" Name="Provider" Click="ButtonAddProvider_Click" >AÑADIR PROVEEDOR</Button>
                                                 <TextBox Margin="550,124,30,186" x:Name="DeleteID4"/>
                                                 <Label Margin="535,95,5,217" HorizontalAlignment="Center" Width="193" Content="Introduce el nombre del contacto:"/>
                                         </Grid>
