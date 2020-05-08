@@ -128,9 +128,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="interface_eye_view_watch_eyeball_pupil_circle_icon_132981.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icono.ico" />
   </ItemGroup>
   <ItemGroup>

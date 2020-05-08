@@ -8,6 +8,7 @@
         Icon="WA317.ico"
         Title="WA317" Height="494" Width="966"
         SizeToContent="WidthAndHeight"
+        
         >
 
     <DockPanel>
@@ -21,7 +22,7 @@
                 <MenuItem Header="Actualizar" Click="Button_Click_Load"></MenuItem>
                 <MenuItem Header="Salir" Click="Button_Click_Exit"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Configuración">
+            <MenuItem Header="Configuración" >
 
             </MenuItem>
 

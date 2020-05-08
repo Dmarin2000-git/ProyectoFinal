@@ -24,12 +24,14 @@ namespace PaginaPrincipal
     public partial class MainWindow : Window
     {
 
+        
+
         public MainWindow() /*MAIN*/
         {
             InitializeComponent();
-
+  
             abrirtablas(); //llamaos este metodo para la abrir en la pagina principal todas las tablas en sus respectivos datagrids
-
+            
         }
 
         public SqlConnection EstablecerConexion()/*ABRIR LA CONEXION CON LA BASE DE DATOS*/
@@ -448,7 +450,7 @@ namespace PaginaPrincipal
             int id_alm = 0;
             String id_almSTring = null;
 
-            double cost;
+            
             String costString;
 
             if (string.IsNullOrWhiteSpace(codefilter.Text)) 
@@ -503,14 +505,14 @@ namespace PaginaPrincipal
             }
             else 
             {
-                cost = double.Parse(costfilter.Text);
-                costString = cost.ToString();
+                
+                costString = costfilter.Text;
 
                 if (string.IsNullOrWhiteSpace(almfilter.Text) && string.IsNullOrWhiteSpace(codefilter.Text) && (string.IsNullOrWhiteSpace(almfilter.Text)))
                 {
-                    condicion = "SELECT * FROM Article WHERE precio =" + cost;
+                    condicion = "SELECT * FROM Article WHERE precio =" + costString;
                 }
-                else { condicion = and + "precio = " + cost; }
+                else { condicion = and + "precio = " + costString; }
                 
             }
 
@@ -715,7 +717,9 @@ namespace PaginaPrincipal
             conn.Open();
             SqlCommand sql_cmnd1 = new SqlCommand("app_restoreTables", conn); //creamos un comando para ejecutar procedures
             sql_cmnd1.CommandType = CommandType.StoredProcedure;
+            sql_cmnd1.ExecuteNonQuery();
             MessageBox.Show("Tablas restablecidas");
+            bindatagrid("Article", 1);
             conn.Close();
         }
 
@@ -740,7 +744,7 @@ namespace PaginaPrincipal
                         SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
                         sql_cmnd2.CommandType = CommandType.StoredProcedure;
                         sql_cmnd2.ExecuteNonQuery();//ejecutamos el procedure que actualiza el stock de los almacenes
-                        conn.Close();
+                        //conn.Close();
 
                         abrirtablas(); //reabrimos la tablas para que se vean actualizadas
 
@@ -798,6 +802,7 @@ namespace PaginaPrincipal
             switch (result)
             {
                 case MessageBoxResult.Yes:
+                    
                     this.Close(); 
                 break;
                 case MessageBoxResult.No:
@@ -825,5 +830,6 @@ namespace PaginaPrincipal
             Window2 mostrar = new Window2();
             mostrar.Show();
         }
+
     }
 }
