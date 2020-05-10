@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PaginaPrincipal"
         mc:Ignorable="d"
         Title="AÑADIR EMPELADOS" Height="312.586" Width="787.198"
-        Icon="WA317.ico">
+        Icon="WA317.ico"
+        Background="LightGray">
     <Grid Margin="0,0,2,4">
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="384,50,10,98" />
         <Button Content="INSERTAR" HorizontalAlignment="Left" Margin="637,237,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="Button_Click"/>

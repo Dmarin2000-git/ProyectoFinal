@@ -11,7 +11,7 @@
         
         >
 
-    <DockPanel>
+    <DockPanel Background="#3F8B8D8D">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Archivo">
                 <MenuItem Header="Actualización masiva" Click="Button_Click_AM"></MenuItem>
@@ -29,16 +29,19 @@
         </Menu>
 
         <Grid Height="429" VerticalAlignment="Bottom" Margin="0,-8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-            <TabControl Margin="10,10,20,0" >
+            <TabControl Margin="10,10,20,0" Background="#3F8B8D8D" >
 
                 <TabItem Header="CONSULTA" Height="40" Width="100">
 
                     <Grid Margin="10">
 
-                        <TabControl TabStripPlacement="Left" Margin="0, 0, 0, 10">
-                            <TabItem Name="Artículos" Header="Artículos" Height="30" Width="100">
-                                <TextBlock TextWrapping="WrapWithOverflow" Margin="54,10,0,0"><InlineUIContainer>
+                        <TabControl TabStripPlacement="Left" Margin="0, 0, 0, 10" Background="{x:Null}">
+                            <TabItem Name="Artículos" Header="Artículos" Height="30" Width="100" Margin="0" VerticalAlignment="Top">
+                                <TextBlock TextWrapping="WrapWithOverflow" Margin="54,10,0,0" Background="#3F8B8D8D"><InlineUIContainer>
                                             <DataGrid x:Name="dataGrid1" IsReadOnly="True" Height="326" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="511"/>
                             
                                     </InlineUIContainer><InlineUIContainer>
@@ -56,7 +59,7 @@
 
                             <TabItem Name="warehouse" Header="Almacenes" Height="30" Width="100">
 
-                                <TextBlock TextWrapping="WrapWithOverflow" Margin="0,0,-10,0">
+                                <TextBlock TextWrapping="WrapWithOverflow" Margin="0,0,-10,0" Background="#3F8B8D8D">
                                             <Grid Height="336" Width="733">
                                                 <DataGrid x:Name="dataGrid2" Margin="0,0,219,0" IsReadOnly="True"/>
                                                 <Label Margin="550,10,30,290" HorizontalContentAlignment="Center" Width="153">ELIMINAR FILA POR ID:</Label>
@@ -74,7 +77,7 @@
                             </TabItem>
                             <TabItem Name="employees" Header="Empleados" Height="30" Width="100" Margin="0" VerticalAlignment="Bottom">
                                 <TabItem.Content>
-                                    <TextBlock TextWrapping="WrapWithOverflow">
+                                    <TextBlock TextWrapping="WrapWithOverflow" Background="#3F8B8D8D">
                                         <Grid Height="336" Width="733">
                                             <DataGrid x:Name="dataGrid3" Margin="0,0,219,0" IsReadOnly="True" Height="337" Width="515"/>
                                             <Label Margin="530,10,10,290" HorizontalAlignment="Center">ELIMINAR FILA</Label>
@@ -87,9 +90,9 @@
                                     </TextBlock>
                                 </TabItem.Content>
                             </TabItem>
-                            <TabItem Name="provider" Header="Proveedores" Height="30" Width="100">
+                            <TabItem Name="provider" Header="Proveedores" Height="30" Width="100" Margin="0" VerticalAlignment="Bottom">
                                 <TabItem.Content>
-                                    <TextBlock TextWrapping="WrapWithOverflow">
+                                    <TextBlock TextWrapping="WrapWithOverflow" Background="#3F8B8D8D">
                                         <Grid Height="336" Width="733">
                                             <DataGrid x:Name="dataGrid4"  Margin="0,0,219,0" IsReadOnly="True" Height="337" Width="515" />
                                             <Label Margin="530,10,10,290" HorizontalAlignment="Center">ELIMINAR FILA</Label>
@@ -118,8 +121,8 @@
                                             </ComboBox>
                                             <Label Margin="0,26,507,281"> Selecciona una tabla para cargar de nuevo:</Label>
                                             <DataGrid Margin="10,66,311,10" Name="DataGridFilter"/>
-                                            <Grid Margin="447,1,23,36" Background="AliceBlue" ShowGridLines="True" >
-                                                <TabControl>
+                                            <Grid Margin="447,1,23,36"  ShowGridLines="True" Background="#3F8B8D8D">
+                                                <TabControl Margin="0,0,0,-15">
                                                     <TabItem Header="ARTICLE" Name="articlefilter">
                                                         <Grid>
                                                             <Grid.ColumnDefinitions>
@@ -169,7 +172,7 @@
                                                              
                                                         </Grid>
                                                     </TabItem>
-                                                    <TextBlock Height="100" TextWrapping="Wrap" Text="TextBlock" Width="100"/>
+                                                   
                                                 </TabControl>
                                             </Grid>
                                         </Grid>
@@ -188,6 +191,7 @@
 
 
             </TabControl>
+            <Image HorizontalAlignment="Left" Height="40" Margin="40,367,0,0" VerticalAlignment="Top" Width="57" Source="C:\Users\Dani\Pictures\Saved Pictures\WA317.png"/>
         </Grid>
 
     </DockPanel>

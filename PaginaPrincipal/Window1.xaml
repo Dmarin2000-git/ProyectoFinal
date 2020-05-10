@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PaginaPrincipal"
         mc:Ignorable="d"
         Title="AÑADIR ALMACÉN" Height="407.776" Width="418.013"
-        Icon="WA317.ico">
+        Icon="WA317.ico"
+        Background="LightGray">
     <Grid Margin="-15,0,17,7">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="11*"/>
