@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Configuration;
+using System.ComponentModel;
+using Microsoft.Win32;
 
 namespace PaginaPrincipal
 {
@@ -23,19 +25,29 @@ namespace PaginaPrincipal
     /// </summary>
     public partial class MainWindow : Window
     {
-
         
 
         public MainWindow() /*MAIN*/
         {
             InitializeComponent();
-  
             abrirtablas(); //llamaos este metodo para la abrir en la pagina principal todas las tablas en sus respectivos datagrids
-            
         }
 
+        private void Button_Click_Admin(object sender, RoutedEventArgs e)
+        {
+            mostrar_adm();
+        }
+
+        public void mostrar_adm() {
+
+            loginAd log = new loginAd();
+            log.Show();
+
+        }
+
+
         public SqlConnection EstablecerConexion()/*ABRIR LA CONEXION CON LA BASE DE DATOS*/
-        { 
+        {
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = ConfigurationManager.ConnectionStrings["connectionddbb"].ConnectionString;
             return conn;
@@ -105,7 +117,7 @@ namespace PaginaPrincipal
             bindatagrid("Proveedor", 4);
         }
 
-        private void Button_Click_LoadArtcile (object sender, RoutedEventArgs e) /*FORZAR CARGA DE DATOS*/
+        private void Button_Click_LoadArtcile(object sender, RoutedEventArgs e) /*FORZAR CARGA DE DATOS*/
         {
             MessageBoxResult result = MessageBox.Show("¿Estás seguro de que quieres forzar una carga de datos?", "FC", MessageBoxButton.YesNo);
             switch (result)
@@ -128,7 +140,7 @@ namespace PaginaPrincipal
                         MessageBox.Show("ACTUALIZADO", "FC");
 
                     } catch (Exception ex) { MessageBox.Show("No hay información el fichero"); }
-                    
+
                     break;
                 case MessageBoxResult.No:
                     MessageBox.Show("Operación cancelada", "FC");
@@ -172,7 +184,7 @@ namespace PaginaPrincipal
         private void ButtonDelete_Click(object sender, RoutedEventArgs e) /*ELIMINAR FILA DE LA TABLA ARTICLE*/
         {
             SqlConnection conn = EstablecerConexion(); //establecemos conexion
-            
+
 
             try
             {
@@ -304,13 +316,22 @@ namespace PaginaPrincipal
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    SqlConnection conn = EstablecerConexion();
-                    SqlCommand command = new SqlCommand("TRUNCATE TABLE Article",conn);//creamos comando
-                    command.Connection.Open();
-                    command.ExecuteNonQuery();//ejecutamos comando
-                    MessageBox.Show("TABLA VACIADA", "TR");
-                    bindatagrid("Article", 1);
-                    conn.Close();
+
+                    if (Administrador.admin == true) {
+                        SqlConnection conn = EstablecerConexion();
+                        SqlCommand command = new SqlCommand("TRUNCATE TABLE Article", conn);//creamos comando
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();//ejecutamos comando
+                        MessageBox.Show("TABLA VACIADA", "TR");
+                        bindatagrid("Article", 1);
+                        conn.Close();
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("Esta operación requiere de permisos de administrador");
+                    }
+
                     break;
 
                 case MessageBoxResult.No:
@@ -325,13 +346,22 @@ namespace PaginaPrincipal
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    SqlConnection conn = EstablecerConexion();
-                    SqlCommand command = new SqlCommand("TRUNCATE TABLE Almacenes", conn);//creamos comando
-                    command.Connection.Open();
-                    command.ExecuteNonQuery();//ejecutamos comando
-                    MessageBox.Show("TABLA VACIADA", "TW");
-                    bindatagrid("Almacenes", 2);
-                    conn.Close();
+
+                    if (Administrador.admin == true)
+                    {
+
+                        SqlConnection conn = EstablecerConexion();
+                        SqlCommand command = new SqlCommand("TRUNCATE TABLE Almacenes", conn);//creamos comando
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();//ejecutamos comando
+                        MessageBox.Show("TABLA VACIADA");
+                        bindatagrid("Almacenes", 2);
+                        conn.Close();
+                    }
+                    else {
+                        MessageBox.Show("Esta operación requiere de permisos de administrador");
+                    }
+
                     break;
 
                 case MessageBoxResult.No:
@@ -346,15 +376,23 @@ namespace PaginaPrincipal
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    SqlConnection conn = EstablecerConexion();
-                    SqlCommand command = new SqlCommand("delete persona where variante = 2", conn);//creamos comando
-                    SqlCommand command1 = new SqlCommand("truncate table empleados ", conn);//creamos comando
-                    command.Connection.Open();
-                    command.ExecuteNonQuery();//ejecutamos comando
-                    command1.ExecuteNonQuery();//ejecutamos comando
-                    MessageBox.Show("TABLA VACIADA", "TE");
-                    bindatagrid("Empleados", 2);
-                    conn.Close();
+
+                    if (Administrador.admin == true) {
+                        SqlConnection conn = EstablecerConexion();
+                        SqlCommand command = new SqlCommand("delete persona where variante = 2", conn);//creamos comando
+                        SqlCommand command1 = new SqlCommand("truncate table empleados ", conn);//creamos comando
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();//ejecutamos comando
+                        command1.ExecuteNonQuery();//ejecutamos comando
+                        MessageBox.Show("TABLA VACIADA", "TE");
+                        bindatagrid("Empleados", 2);
+                        conn.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta operación requiere de permisos de administrador");
+                    }
+
                     break;
 
                 case MessageBoxResult.No:
@@ -369,17 +407,25 @@ namespace PaginaPrincipal
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    SqlConnection conn = EstablecerConexion();
-                    SqlCommand command = new SqlCommand("delete persona where variante = 1", conn);//creamos comando
-                    SqlCommand command1 = new SqlCommand("truncate table representante ", conn);//creamos comando
-                    SqlCommand command2 = new SqlCommand("truncate table proveedor ", conn);//creamos comando
-                    command.Connection.Open();
-                    command.ExecuteNonQuery();//ejecutamos comando
-                    command1.ExecuteNonQuery();//ejecutamos comando
-                    command2.ExecuteNonQuery();//ejecutamos comando
-                    MessageBox.Show("TABLA VACIADA", "TP");
-                    bindatagrid("Empleados", 2);
-                    conn.Close();
+
+                    if (Administrador.admin == true) {
+                        SqlConnection conn = EstablecerConexion();
+                        SqlCommand command = new SqlCommand("delete persona where variante = 1", conn);//creamos comando
+                        SqlCommand command1 = new SqlCommand("truncate table representante ", conn);//creamos comando
+                        SqlCommand command2 = new SqlCommand("truncate table proveedor ", conn);//creamos comando
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();//ejecutamos comando
+                        command1.ExecuteNonQuery();//ejecutamos comando
+                        command2.ExecuteNonQuery();//ejecutamos comando
+                        MessageBox.Show("TABLA VACIADA", "TP");
+                        bindatagrid("Empleados", 2);
+                        conn.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta operación requiere de permisos de administrador");
+                    }
+
                     break;
 
                 case MessageBoxResult.No:
@@ -393,7 +439,7 @@ namespace PaginaPrincipal
             abrirtablas(); //abrir las tablas de nuevo
         }
 
-        
+
         private void BoxArticle_Selected(object sender, RoutedEventArgs e) /*ABRIR TABLA EN EL FILTRO DE ARTICLE*/
         {
             SqlConnection conn = EstablecerConexion();
@@ -405,7 +451,7 @@ namespace PaginaPrincipal
             DataTable dt = new DataTable("Article");
             sda.Fill(dt); //selecciona la tabla demandada
             DataGridFilter.ItemsSource = dt.DefaultView;
-           
+
         }
 
         private void BoxProveedores_Selected(object sender, RoutedEventArgs e) /*ABRIR TABLA FILTRO PROVEEDORES */
@@ -415,7 +461,7 @@ namespace PaginaPrincipal
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             cmd.CommandText = "select p.*,r.nombre as contacto, pp.apellido,pp.DNI, pp.direccion,pp.correo,pp.telefono from Proveedor p inner join Representante r on p.id = r.id_prov " +
-                        "inner join Persona pp on pp.nombre = r.nombre"; 
+                        "inner join Persona pp on pp.nombre = r.nombre";
             cmd.Connection = conn; //creamos comando para para realizar el select
             DataTable dt = new DataTable("Proveedores");
             sda.Fill(dt); //selecciona la tabla demandada
@@ -442,7 +488,7 @@ namespace PaginaPrincipal
             String and = " and "; // union 
             int avisador = 0; // indice para saber cuando no se ha seleccionado ningun filtro
 
-            int idprov= 0;
+            int idprov = 0;
             String idprString = null; //igualamos los valores de los text box en variables
 
             String art_code = null;
@@ -450,19 +496,19 @@ namespace PaginaPrincipal
             int id_alm = 0;
             String id_almSTring = null;
 
-            
+
             String costString;
 
-            if (string.IsNullOrWhiteSpace(codefilter.Text)) 
+            if (string.IsNullOrWhiteSpace(codefilter.Text))
             {
                 //Si esta vacio el avisador suma
                 avisador++;
             }
-            else 
+            else
             {
                 //si no esta vacio hace el select con la condicion del textbox
                 art_code = codefilter.Text;
-                condicion = "SELECT * FROM Article WHERE art_code ="+"'"+art_code+"'";
+                condicion = "SELECT * FROM Article WHERE art_code =" + "'" + art_code + "'";
             }
 
             if (string.IsNullOrWhiteSpace(almfilter.Text))
@@ -476,7 +522,7 @@ namespace PaginaPrincipal
 
                 if (string.IsNullOrWhiteSpace(codefilter.Text)) // si el filtro anterior a este esta vacio crea de nuevo el select con el filtro de este textbox
                 {
-                    condicion = "SELECT * FROM Article WHERE id_alm ="+id_alm;
+                    condicion = "SELECT * FROM Article WHERE id_alm =" + id_alm;
                 }
                 else { condicion += and + "id_alm = " + id_alm; } //si no está vacio añade tu condicion a la cola
             }
@@ -503,9 +549,9 @@ namespace PaginaPrincipal
                 //MessageBox.Show("Cost esta vacio");
                 avisador++;
             }
-            else 
+            else
             {
-                
+
                 costString = costfilter.Text;
 
                 if (string.IsNullOrWhiteSpace(almfilter.Text) && string.IsNullOrWhiteSpace(codefilter.Text) && (string.IsNullOrWhiteSpace(almfilter.Text)))
@@ -513,7 +559,7 @@ namespace PaginaPrincipal
                     condicion = "SELECT * FROM Article WHERE precio =" + costString;
                 }
                 else { condicion = and + "precio = " + costString; }
-                
+
             }
 
 
@@ -526,11 +572,11 @@ namespace PaginaPrincipal
 
             if (avisador == 4) // si el avisador es 4 no se ha seleccionado ningún filtro
             {
-                MessageBox.Show("Introduzca algún filtro"); 
+                MessageBox.Show("Introduzca algún filtro");
             }
             else {
                 MessageBox.Show(condicion);
-                cmd.CommandText =  condicion;
+                cmd.CommandText = condicion;
                 cmd.Connection = conn; //creamos comando para para realizar el select
                 DataTable dt = new DataTable("Article");
                 sda.Fill(dt); //selecciona la tabla demandada
@@ -554,11 +600,11 @@ namespace PaginaPrincipal
             String id_almSTring = null;
 
             if (String.IsNullOrEmpty(cargofilter.Text)) {
-                 avisador ++;
+                avisador++;
             }
             else {
                 cargo = cargofilter.Text;
-                condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2"+and+ "cargo = "+"'"+cargo+"'";
+                condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2" + and + "cargo = " + "'" + cargo + "'";
             }
 
             if (String.IsNullOrEmpty(almidfilter.Text))
@@ -571,7 +617,7 @@ namespace PaginaPrincipal
 
                 if (string.IsNullOrWhiteSpace(cargofilter.Text))
                 {
-                    condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2" + and + "e.almacenID= "+ id_almSTring;
+                    condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2" + and + "e.almacenID= " + id_almSTring;
                 }
                 else { condicion += and + "e.almacenID = " + id_almSTring; }
             }
@@ -585,10 +631,10 @@ namespace PaginaPrincipal
 
                 if (String.IsNullOrEmpty(cargofilter.Text) && String.IsNullOrEmpty(almfilter.Text))
                 {
-                    condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2" + and + "p.nombre = " + "'"+nombre+"'";
+                    condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2" + and + "p.nombre = " + "'" + nombre + "'";
                 }
                 else {
-                    condicion += and + "p.nombre = " + "'"+nombre+"'";
+                    condicion += and + "p.nombre = " + "'" + nombre + "'";
                 }
             }
 
@@ -600,10 +646,10 @@ namespace PaginaPrincipal
                 apellido = apellidofilter.Text;
                 if (String.IsNullOrEmpty(cargofilter.Text) && String.IsNullOrEmpty(almfilter.Text) && String.IsNullOrEmpty(nombrefilter.Text))
                 {
-                    condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2" + and + "p.apellido = " + "'"+apellido+"'";
+                    condicion = "select e.*, p.apellido, p.DNI, p.direccion, p.telefono, p.correo from empleado e inner join persona p on e.nombre = p.nombre where p.variante = 2" + and + "p.apellido = " + "'" + apellido + "'";
                 }
                 else {
-                        condicion += and + "p.apellido = " + "'"+apellido+"'";
+                    condicion += and + "p.apellido = " + "'" + apellido + "'";
                 }
             }
             //MessageBox.Show(condicion);
@@ -632,7 +678,7 @@ namespace PaginaPrincipal
 
         private void Button_Click_PFilter(object sender, RoutedEventArgs e) /*FILTRO PARA PROVEEDORES*/
         {
-            String condicion = ""; 
+            String condicion = "";
             String and = " and ";
             int avisador = 0;
 
@@ -668,24 +714,24 @@ namespace PaginaPrincipal
                 }
             }
 
-                if (String.IsNullOrEmpty(represecondfilter.Text))
+            if (String.IsNullOrEmpty(represecondfilter.Text))
+            {
+                avisador++;
+            }
+            else
+            {
+                apellido_repre = represecondfilter.Text;
+                if (String.IsNullOrEmpty(cargofilter.Text) && String.IsNullOrEmpty(almfilter.Text))
                 {
-                    avisador++;
+                    condicion = "select p.*,r.nombre as contacto, pp.apellido,pp.DNI, pp.direccion,pp.correo,pp.telefono from Proveedor p inner join Representante r on p.id = r.id_prov " +
+                    "inner join Persona pp on pp.nombre = r.nombre" + and + "pp.apellido = " + "'" + apellido_repre + "'";
                 }
                 else
                 {
-                    apellido_repre = represecondfilter.Text;
-                    if (String.IsNullOrEmpty(cargofilter.Text) && String.IsNullOrEmpty(almfilter.Text))
-                    {
-                        condicion = "select p.*,r.nombre as contacto, pp.apellido,pp.DNI, pp.direccion,pp.correo,pp.telefono from Proveedor p inner join Representante r on p.id = r.id_prov " +
-                        "inner join Persona pp on pp.nombre = r.nombre" + and + "pp.apellido = " + "'" + apellido_repre + "'";
-                    }
-                    else
-                    {
-                        condicion += and + "pp.apellido = " + "'" + apellido_repre + "'";
-                    }
-
+                    condicion += and + "pp.apellido = " + "'" + apellido_repre + "'";
                 }
+
+            }
 
             //MessageBox.Show(condicion);
             SqlConnection conn = EstablecerConexion();
@@ -712,15 +758,26 @@ namespace PaginaPrincipal
 
         private void Button_Click_Restore(object sender, RoutedEventArgs e) /*RESTAURAR LAS TABLAS DEL ULTIMO BACKUP*/
         {
-            MessageBox.Show("Se restablecerán las tablas de la última copia de seguridad. ¿Desea continuar?");
-            SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
-            conn.Open();
-            SqlCommand sql_cmnd1 = new SqlCommand("app_restoreTables", conn); //creamos un comando para ejecutar procedures
-            sql_cmnd1.CommandType = CommandType.StoredProcedure;
-            sql_cmnd1.ExecuteNonQuery();
-            MessageBox.Show("Tablas restablecidas");
-            bindatagrid("Article", 1);
-            conn.Close();
+            MessageBoxResult result = MessageBox.Show("Se restablecerán las tablas de la última copia de seguridad. ¿Desea continuar?", "AM",
+                MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+
+                    SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
+                    conn.Open();
+                    SqlCommand sql_cmnd1 = new SqlCommand("app_restoreTables", conn); //creamos un comando para ejecutar procedures
+                    sql_cmnd1.CommandType = CommandType.StoredProcedure;
+                    sql_cmnd1.ExecuteNonQuery();
+                    MessageBox.Show("Tablas restablecidas");
+                    bindatagrid("Article", 1);
+                    conn.Close();
+                    break;
+
+                case MessageBoxResult.No:
+                    MessageBox.Show("Operacion cancelada");
+                    break;
+            }
         }
 
         private void Button_Click_AM(object sender, RoutedEventArgs e) /*DESCARGA Y CARGA DE DATOS EN LA BASE DE DATOS*/
@@ -769,7 +826,7 @@ namespace PaginaPrincipal
                 case MessageBoxResult.Yes:
                     try
                     {
-                        
+
                         SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
                         conn.Open();
                         SqlCommand sql_cmnd = new SqlCommand("app_OutStock", conn); //hacemos las salidas
@@ -802,27 +859,43 @@ namespace PaginaPrincipal
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    
-                    this.Close(); 
-                break;
+                    loginAd close = new loginAd();
+                    close.Close();
+                    this.Close();
+                    break;
                 case MessageBoxResult.No:
-                    
+
                     break;
             }
         }
 
         private void Button_AddWarehouse(object sender, RoutedEventArgs e) /*AÑADIR ALMACENES*/
         {
-            Window1 mostrar = new Window1();
 
-            mostrar.Show();
+            if (Administrador.admin == true) {
+                Window1 mostrar = new Window1();
+
+                mostrar.Show();
+            }
+            else
+            {
+                MessageBox.Show("Esta operación requiere de permisos de administrador");
+            }
+
+
         }
 
         private void Button_AddProvider(object sender, RoutedEventArgs e)
         {
+            if (Administrador.admin == true) {
+                Window_Empleados mostrar = new Window_Empleados();
+                mostrar.Show();
+            }
+            else
+            {
+                MessageBox.Show("Esta operación requiere de permisos de administrador");
+            }
 
-            Window_Empleados mostrar = new Window_Empleados();
-            mostrar.Show();
         }
 
         private void ButtonAddProvider_Click(object sender, RoutedEventArgs e)
@@ -831,5 +904,10 @@ namespace PaginaPrincipal
             mostrar.Show();
         }
 
+    }
+
+    public static class Administrador {
+        public static Boolean admin;
+        
     }
 }

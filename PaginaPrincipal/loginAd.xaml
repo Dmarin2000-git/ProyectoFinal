@@ -1,0 +1,19 @@
+﻿<Window x:Class="PaginaPrincipal.loginAd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PaginaPrincipal"
+        mc:Ignorable="d"
+        Title="loginAd" Height="335.016" Width="325.868"
+        Background="LightGray">
+    <Grid Margin="0,0,0,6">
+        <Label Content="ADMINISTRADOR" HorizontalAlignment="Left" Margin="52,10,0,0" VerticalAlignment="Top" Height="54" Width="216" FontSize="25"/>
+        <PasswordBox HorizontalAlignment="Left" Height="23" Margin="52,95,0,0" VerticalAlignment="Top" Width="216" x:Name="password" PasswordChar="*" />
+        <Label Content="Introduce la contarseña de administrador:" HorizontalAlignment="Left" Margin="45,64,0,0" VerticalAlignment="Top" Width="233"/>
+        <Button Content="ACEPTAR" HorizontalAlignment="Left" Margin="118,122,0,0" VerticalAlignment="Top" Width="84" Height="32" Click="Button_Click"/>
+        <Label HorizontalAlignment="Left" Margin="10,208,0,0" VerticalAlignment="Top" Height="80" Content="El usuario de administrador concede permisos &#xD;&#xA;excepcionales para realizar operaciones que conllevan &#xD;&#xA;mayor responsabilidad, así vaciar tablas, generar &#xD;&#xA;almacenes y empleados."
+              Foreground="red"  />
+        <Button Content="DEJAR DE SER ADMINISTRADOR" HorizontalAlignment="Left" Margin="52,171,0,0" VerticalAlignment="Top" Width="216" Height="32" Click="Button_Click_OUT"/>
+    </Grid>
+</Window>

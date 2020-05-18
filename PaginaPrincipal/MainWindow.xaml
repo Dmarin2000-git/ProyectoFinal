@@ -11,7 +11,7 @@
         
         >
 
-    <DockPanel Background="#3F8B8D8D">
+    <DockPanel Background="#3F8B8D8D" Height="463" VerticalAlignment="Bottom">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Archivo">
                 <MenuItem Header="Actualización masiva" Click="Button_Click_AM"></MenuItem>
@@ -23,7 +23,7 @@
                 <MenuItem Header="Salir" Click="Button_Click_Exit"></MenuItem>
             </MenuItem>
             <MenuItem Header="Configuración" >
-
+                <MenuItem Header="Administrador" Click="Button_Click_Admin"></MenuItem>
             </MenuItem>
 
         </Menu>
@@ -33,7 +33,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TabControl Margin="10,10,20,0" Background="#3F8B8D8D" >
+            <TabControl Margin="10,0,20,0" Background="#3F8B8D8D" Height="419" VerticalAlignment="Bottom" >
 
                 <TabItem Header="CONSULTA" Height="40" Width="100">
 
