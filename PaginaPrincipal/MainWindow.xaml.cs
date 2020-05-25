@@ -59,9 +59,7 @@ namespace PaginaPrincipal
             String search = buscar; //indica la tabla que quieres visualizar
             int indicador_grid = indicador; //indicador para diferenciar entre datagrids
 
-            SqlConnection conn = EstablecerConexion();
-
-            conn.Open(); //codigo para abrir la conexión con la base de datos
+            SqlConnection conn = EstablecerConexion(); //codigo para abrir la conexión con la base de datos
                          //hace referencia al App.conig donde tenemos las credenciales
                          //MessageBox.Show("connected"); 
 
@@ -150,12 +148,13 @@ namespace PaginaPrincipal
 
         }
 
-        private void backup() {
+        private void backup() { /*BACKUP SYSTEM*/
 
             SqlConnection conn = EstablecerConexion(); //establecemos la conexión con la base de datos
             conn.Open();
             SqlCommand sql_cmnd1 = new SqlCommand("app_backUpSystem", conn); //creamos un comando para ejecutar procedures
             sql_cmnd1.CommandType = CommandType.StoredProcedure;
+            sql_cmnd1.ExecuteNonQuery();//ejecutamos la orden
             conn.Close();
 
             //abrirtablas(); //no hace falta ya que no mostramos las tablas del backup
