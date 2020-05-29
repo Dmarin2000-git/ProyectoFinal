@@ -197,14 +197,14 @@ namespace PaginaPrincipal
                     SqlCommand command = new SqlCommand("DELETE Article where id =" + delete_data, conn);//creamos comando
                     command.Connection.Open();
                     command.ExecuteNonQuery();//ejecutamos comando
-                    MessageBox.Show("FILA ELIMINADA");
+                    //MessageBox.Show("FILA ELIMINADA");
                     bindatagrid("Article", 1);//actualizamos la tabla
                     conn.Close();
                     DeleteID.Clear();//limpimaos el textbox
                 }
 
             }
-            catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
+            catch (Exception ex) { MessageBox.Show("Ha surgido un error. Contacta con el administrador"); }
             //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
         }
 
@@ -224,14 +224,14 @@ namespace PaginaPrincipal
                     SqlCommand command = new SqlCommand("DELETE Almacenes where id =" + delete_data, conn);//creamos comando
                     command.Connection.Open();
                     command.ExecuteNonQuery();//ejecutamos comando
-                    MessageBox.Show("FILA ELIMINADA");
+                    //MessageBox.Show("FILA ELIMINADA");
                     bindatagrid("Almacenes", 2);//actualizamos la tabla
                     conn.Close();
                     DeleteID1.Clear();//limpimaos el textbox
                 }
 
             }
-            catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
+            catch (Exception ex) { MessageBox.Show("Ha surgido un error. Contacta con el administrador"); }
             //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
         }
 
@@ -253,26 +253,27 @@ namespace PaginaPrincipal
 
             try
             {
-                String delete_data = DeleteID2.Text; //convertimos el textbox en int
+                String delete_data = DeleteID2.Text; 
+
                 if (String.IsNullOrEmpty(DeleteID2.Text))
                 {
                     MessageBox.Show("Introduzca un nombre"); //capturamos excepcion manualmente
                 }
                 else
                 {
-                    SqlCommand command = new SqlCommand("DELETE Empleado where nombre =" + delete_data, conn);
-                    SqlCommand command1 = new SqlCommand("DELETE Persona where nombre =" + delete_data, conn);//creamos comando
+                    SqlCommand command = new SqlCommand("DELETE Empleado where nombre =" +"'"+ delete_data+"'", conn);
+                    SqlCommand command1 = new SqlCommand("DELETE Persona where nombre =" +"'"+ delete_data+"'", conn);//creamos comando
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                     command1.ExecuteNonQuery();//ejecutamos comando
-                    MessageBox.Show("FILA ELIMINADA");
+                    //MessageBox.Show("FILA ELIMINADA");
                     bindatagrid("Empleado", 3);//actualizamos la tabla
                     conn.Close();
                     DeleteID2.Clear();//limpimaos el textbox
                 }
 
             }
-            catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
+            catch (Exception ex) { MessageBox.Show("Ha surgido un error. Contacta con el administardor."); }
             //en el caso de que el text box esté vacio saltara esta excepcion junto con el mensaje 
         }
 
@@ -291,13 +292,13 @@ namespace PaginaPrincipal
                 else
                 {
                     SqlCommand command = new SqlCommand("DELETE Proveedor where id =" + delete_data, conn);
-                    SqlCommand command1 = new SqlCommand("DELETE Representante where nombre =" + delete_data1, conn);
-                    SqlCommand command2 = new SqlCommand("DELETE Persona where nombre =" + delete_data1, conn);//creamos comando
+                    SqlCommand command1 = new SqlCommand("DELETE Representante where nombre =" +"'"+ delete_data1+"'", conn);
+                    SqlCommand command2 = new SqlCommand("DELETE Persona where nombre =" + "'"+delete_data1+"'", conn);//creamos comando
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                     command1.ExecuteNonQuery();
                     command2.ExecuteNonQuery();//ejecutamos comando
-                    MessageBox.Show("FILA ELIMINADA ");
+                    //MessageBox.Show("FILA ELIMINADA ");
                     bindatagrid("Proveedores", 4);//actualizamos la tabla
                     conn.Close();
                     DeleteID3.Clear();//limpimaos el textbox
@@ -305,7 +306,7 @@ namespace PaginaPrincipal
                 }
 
             }
-            catch (Exception ex) { MessageBox.Show("RELLENA EL RECUADRO CON EL ID DEL ARTICULO QUE QUIERES ELIMINAR"); }
+            catch (Exception ex) { MessageBox.Show("Ha surgido un error. Contacta con el administrador"); }
         }
 
 
@@ -574,13 +575,17 @@ namespace PaginaPrincipal
                 MessageBox.Show("Introduzca algún filtro");
             }
             else {
-                MessageBox.Show(condicion);
-                cmd.CommandText = condicion;
-                cmd.Connection = conn; //creamos comando para para realizar el select
-                DataTable dt = new DataTable("Article");
-                sda.Fill(dt); //selecciona la tabla demandada
-                DataGridFilter.ItemsSource = dt.DefaultView;
-                conn.Close();
+                try
+                { //MessageBox.Show(condicion);
+                    cmd.CommandText = condicion;
+                    cmd.Connection = conn; //creamos comando para para realizar el select
+                    DataTable dt = new DataTable("Article");
+                    sda.Fill(dt); //selecciona la tabla demandada
+                    DataGridFilter.ItemsSource = dt.DefaultView;
+                    conn.Close();
+                }
+                catch (SqlException ex) { MessageBox.Show(ex.ToString()); }
+                
             }
 
         }
@@ -664,7 +669,7 @@ namespace PaginaPrincipal
             }
             else
             {
-                MessageBox.Show(condicion);
+                //MessageBox.Show(condicion);
                 cmd.CommandText = condicion;
                 cmd.Connection = conn; //creamos comando para para realizar el select
                 DataTable dt = new DataTable("Empleado");
@@ -745,7 +750,7 @@ namespace PaginaPrincipal
             }
             else
             {
-                MessageBox.Show(condicion);
+                //MessageBox.Show(condicion);
                 cmd.CommandText = condicion;
                 cmd.Connection = conn; //creamos comando para para realizar el select
                 DataTable dt = new DataTable("Proveedor");
@@ -834,10 +839,8 @@ namespace PaginaPrincipal
                         SqlCommand sql_cmnd2 = new SqlCommand("app_CountWarehouse", conn);
                         sql_cmnd2.CommandType = CommandType.StoredProcedure;
                         sql_cmnd2.ExecuteNonQuery();//ejecutamos el procedure que actualiza el stock de los almacenes
-
-                        conn.Close();
-
                         abrirtablas(); //reabrimos la tablas para que se vean actualizadas
+                        conn.Close();
 
                         MessageBox.Show("ACTUALIZADO", "EXIT");
 

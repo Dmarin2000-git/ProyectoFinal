@@ -14,7 +14,7 @@
     <DockPanel Background="#3F8B8D8D" Height="463" VerticalAlignment="Bottom">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Archivo">
-                <MenuItem Header="Actualización masiva" Click="Button_Click_AM"></MenuItem>
+                <!--MenuItem Header="Actualización masiva" Click="Button_Click_AM"></-->
                 <MenuItem Header="Forzar carga de datos" Click="Button_Click_LoadArtcile"></MenuItem>
                 <MenuItem Header="Forzar salida de datos" Click="Button_Click_OutArtcile"></MenuItem>
                 <MenuItem Header="Copia de Seguridad" Click="Button_Click_BackUp"></MenuItem>
@@ -83,7 +83,7 @@
                                             <Label Margin="530,10,10,290" HorizontalAlignment="Center">ELIMINAR FILA</Label>
                                                 <Label Margin="562,40,38,272" HorizontalAlignment="Center" Width="133">Introduce un nombre:</Label>
                                                 <TextBox Margin="550,64,30,246" Name="DeleteID2"></TextBox>
-                                                <Button Margin="550,95,30,215" Name="ButtonDelete2" Click="ButtonDelete_Click_E">ELIMINAR</Button>
+                                                <Button Margin="550,95,30,215" Click="ButtonDelete_Click_E">ELIMINAR</Button>
                                                 <Button Height="25" Margin="570,292,10,20" Name="ButtonTruncate2" Click="ButtonTruncateE_Click" Background="#FFFB0000" BorderBrush="#FFFB0000" Foreground="White">VACIAR TABLA</Button>
                                                 <Button Height="25" Margin="570,249,10,62" Name="AddEmployee" Click="Button_AddProvider" >AÑADIR EMPLEADO</Button>
                                         </Grid>
@@ -129,13 +129,13 @@
                                                                 <ColumnDefinition Width="94*"/>
                                                                 <ColumnDefinition Width="173*"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <TextBox Margin="76,30,10,215" Name="codefilter" Grid.ColumnSpan="2"></TextBox>
+                                                            <TextBox Margin="73,34,13,232" Name="codefilter" Grid.ColumnSpan="2"></TextBox>
                                                             <TextBlock Margin="31,186,21,67" RenderTransformOrigin="2.522,0.944" HorizontalAlignment="Center" Width="42">Precio:</TextBlock>
-                                                            <TextBox Margin="76,80,10,165" Name="almfilter" Grid.ColumnSpan="2"></TextBox>
+                                                            <TextBox Margin="73,81,13,186" Name="almfilter" Grid.ColumnSpan="2"></TextBox>
                                                             <TextBlock Margin="14,34,28,219" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Art_Code:</TextBlock>
-                                                            <TextBox Margin="76,130,10,115" Name="provfilter" Grid.ColumnSpan="2"></TextBox>
+                                                            <TextBox Margin="73,132,13,133" Name="provfilter" Grid.ColumnSpan="2"></TextBox>
                                                             <TextBlock Margin="28,80,27,173" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Id_Alm:</TextBlock>
-                                                            <TextBox Margin="76,180,10,65" Name="costfilter" Grid.ColumnSpan="2"></TextBox>
+                                                            <TextBox Margin="73,186,13,80" Name="costfilter" Grid.ColumnSpan="2"></TextBox>
                                                             <TextBlock Margin="24,133,20,120" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center" Width="50">Id_Prov:</TextBlock>
                                                             <Button Margin="57,240,10,10" Click="Button_Click_AFilter" Grid.Column="1">APLICAR</Button>
                                                              
@@ -144,13 +144,13 @@
                                                     </TabItem>
                                                     <TabItem Header="EMPLEADOS" Name="emplyeefilter">
                                                          <Grid>
-                                                            <TextBox Margin="76,30,10,215" Name="cargofilter"></TextBox>
+                                                            <TextBox Margin="76,36,10,230" Name="cargofilter"></TextBox>
                                                             <TextBlock Margin="21,186,199,67" RenderTransformOrigin="2.522,0.944" HorizontalAlignment="Center" Width="47">Apellido:</TextBlock>
-                                                            <TextBox Margin="76,80,10,165" Name="almidfilter"></TextBox>
+                                                            <TextBox Margin="76,82,10,184" Name="almidfilter"></TextBox>
                                                             <TextBlock Margin="31,34,202,219" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Cargo:</TextBlock>
-                                                            <TextBox Margin="76,130,10,115" Name="nombrefilter"></TextBox>
+                                                            <TextBox Margin="76,134,10,132" Name="nombrefilter"></TextBox>
                                                             <TextBlock Margin="28,80,200,173" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Id_Alm:</TextBlock>
-                                                            <TextBox Margin="76,180,10,65" Name="apellidofilter"></TextBox>
+                                                            <TextBox Margin="76,186,10,80" Name="apellidofilter"></TextBox>
                                                             <TextBlock Margin="24,133,193,120" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center" Width="50">nombre:</TextBlock>
                                                             <Button Margin="151,240,10,10" Click="Button_Click_WFilter">APLICAR</Button>
                                                              
@@ -162,11 +162,11 @@
                                                                 <ColumnDefinition Width="103*"/>
                                                                 <ColumnDefinition Width="164*"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <TextBox Margin="76,30,10,215" Name="provnamefilter" Grid.ColumnSpan="2"></TextBox>
+                                                            <TextBox Margin="76,35,10,232" Name="provnamefilter" Grid.ColumnSpan="2"></TextBox>
                                                             <TextBlock Margin="25,137,31,116" RenderTransformOrigin="2.522,0.944" HorizontalAlignment="Center" Width="47">Apellido:</TextBlock>
-                                                            <TextBox Margin="76,80,10,165" Name="reprenamefilter" Grid.ColumnSpan="2"></TextBox>
+                                                            <TextBox Margin="76,83,10,182" Name="reprenamefilter" Grid.ColumnSpan="2"></TextBox>
                                                             <TextBlock Margin="1,34,31,219" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center">Prov.Nombre:</TextBlock>
-                                                            <TextBox Margin="76,130,10,115" Name="represecondfilter" Grid.ColumnSpan="2"></TextBox>
+                                                            <TextBox Margin="76,137,10,129" Name="represecondfilter" Grid.ColumnSpan="2"></TextBox>
                                                             <TextBlock Margin="27,83,24,170" RenderTransformOrigin="0.583,0.889" HorizontalAlignment="Center" Width="52">Nombre:</TextBlock> 
                                                             <Button Margin="48,240,10,10" Click="Button_Click_PFilter" Grid.Column="1">APLICAR</Button>
                                                              

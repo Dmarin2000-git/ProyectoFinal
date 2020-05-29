@@ -67,21 +67,22 @@ namespace PaginaPrincipal
                             /* String comilla = "'";*/
 
                             cmd.CommandText = "insert into Proveedor values(" + id + coma + direcProv + coma + nombreProveedor+ ")";
-                            /*String prueba = "insert into Proveedor values(" + id + coma + direcProv + coma + nombreProveedor + ")";
-                            MessageBox.Show(prueba);*/
+                            String prueba = "insert into Proveedor values(" + id + coma + direcProv + coma + nombreProveedor + ")";
+                            //MessageBox.Show(prueba);
                             cmd.ExecuteNonQuery();
 
                             cmd.CommandText = "insert into Representante values(" + id + coma + nombre+ ")";
-                            /*String prueba3 = "insert into Representantes values(" + id + coma + nombre + ")";
-                            MessageBox.Show(prueba3);*/
+                            String prueba3 = "insert into Representantes values(" + id + coma + nombre + ")";
+                            //MessageBox.Show(prueba3);
                             cmd.ExecuteNonQuery();
 
                             cmd.CommandText = "insert into Persona values(" + DNI + coma + nombre + coma + apellido + coma + correo + coma + direccion + coma + tel + coma + valor + ")";
-                            /*String prueba2 = "insert into Persona values(" + DNI + coma + nombre + coma + apellido + coma + correo + coma + direccion + coma + tel + coma + valor + ")";
-                            MessageBox.Show(prueba2);*/
+                            String prueba2 = "insert into Persona values(" + DNI + coma + nombre + coma + apellido + coma + correo + coma + direccion + coma + tel + coma + valor + ")";
+                            //MessageBox.Show(prueba2);
                             cmd.ExecuteNonQuery();
 
                             MessageBox.Show("Tabla Proveedores actualizada");
+                            conexion.abrirtablas();
                             conn.Close();
 
                             idProvider.Clear();
@@ -93,6 +94,7 @@ namespace PaginaPrincipal
                             correoContact.Clear();
                             direccionContact.Clear();
                             telefonoContact.Clear();
+                            this.Close();
 
                         }
                         catch (SqlException ex) { MessageBox.Show(ex.ToString()); }
